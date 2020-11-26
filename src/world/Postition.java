@@ -16,4 +16,14 @@ public abstract class Postition {
     public Double getY() {
         return y;
     }
+
+    public void setpos (Double x_ , Double y_){
+        x= x_;
+        y= y_;
+    }
+
+    public void addpos (Double x_ , Double y_){
+        x = x_ + x;
+        y = y_ + y;
+    }
 }
