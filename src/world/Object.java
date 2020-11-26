@@ -1,4 +1,4 @@
 package world;
 
-public class Object {
+public class Object extends Postition {
 }
