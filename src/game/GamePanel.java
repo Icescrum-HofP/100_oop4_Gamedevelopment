@@ -12,6 +12,7 @@ public class GamePanel extends JPanel {
 
     long fps =0;
     long frames = 0;
+    String keypressd;
 
     public GamePanel (int h, int w){
      this.setPreferredSize(new Dimension(w,h));
@@ -30,10 +31,6 @@ public class GamePanel extends JPanel {
     }
 
     private void doInitialisations(){
-
-
-
-
 
 
     }
@@ -75,52 +72,52 @@ public class GamePanel extends JPanel {
     public void keyPressed(KeyEvent e) {
 
         if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
-
+            keypressd = "up";
         }
 
         if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
-
-        }
-
-        if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
-
+            keypressd = "left";
         }
 
         if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
-
+            keypressd = "right";
         }
     }
 
     public void keyReleased(KeyEvent e) {
 
         if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
-
+            keypressd = "";
         }
 
         if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
-
+            keypressd = "";
         }
 
         if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
-
+            keypressd = "";
         }
 
         if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
-
+            keypressd = "";
         }
 
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-
+            keypressd = "";
         }
 
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-
+            keypressd = "";
         }
 
     }
 
-    public void keyTyped(KeyEvent e) {
+    public void setKeypressdnull() {
+        this.keypressd = "";
+    }
 
+    public String getKeypressd() {
+        return keypressd;
     }
-    }
+}
 
