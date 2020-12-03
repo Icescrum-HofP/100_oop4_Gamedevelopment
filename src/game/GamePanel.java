@@ -1,6 +1,8 @@
 package game;
 
 import drawing.Drawing;
+import world.Player;
+import world.Postition;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,12 +10,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.Arc2D;
 
 public class GamePanel extends JPanel {
 
     private long fps = 0;
     private long frames = 0;
     private String keypressd = "";
+    private Postition player;
 
     public GamePanel(int h, int w) {
         this.setPreferredSize(new Dimension(w, h));
@@ -49,13 +53,17 @@ public class GamePanel extends JPanel {
         }
     };
 
+    public void playerupdate(Player p){
+        player = p;
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
         frames++;
-        g2.drawRect(200,300 , 40, 40);
+        g2.drawRect((int)player.getX(),(int)player.getY() , 40, 40);
 
         g2.setColor(Color.red);
         g2.drawString("FPS: " + Long.toString(fps), 20, 10);

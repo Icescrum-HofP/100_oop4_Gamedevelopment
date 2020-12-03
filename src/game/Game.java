@@ -17,9 +17,12 @@ public class Game {
 
     }
 
-    public void start() {
+    public void startclient() {
 
         while (true) {
+
+
+
             update();
         }
     }
@@ -27,10 +30,13 @@ public class Game {
 
     private void update() {
 
-
-        player.move(panel.getKeypressd(),1.0);
+        player.move(panel.getKeypressd(),10.0);
+        panel.playerupdate(player);
         panel.setKeypressdnull();
         panel.repaint();
+
+
+
     }
 
 

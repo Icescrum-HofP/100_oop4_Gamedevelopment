@@ -1,28 +1,28 @@
 package world;
 
 public abstract class Postition {
-    private Double x;
-    private Double y;
+    private double x;
+    private double y;
 
     public Postition(Double x_ , Double y_){
         x = 0.0;
         y = 0.0;
     }
 
-    public Double getX() {
+    public double getX() {
         return x;
     }
 
-    public Double getY() {
+    public double getY() {
         return y;
     }
 
-    public void setpos (Double x_ , Double y_){
+    public void setpos (double x_ , double y_){
         x= x_;
         y= y_;
     }
 
-    public void addpos (Double x_ , Double y_){
+    public void addpos (double x_ , double y_){
         x = x_ + x;
         y = y_ + y;
         System.out.println(x +"|" +y);
