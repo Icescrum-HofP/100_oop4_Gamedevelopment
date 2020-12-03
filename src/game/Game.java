@@ -1,43 +1,49 @@
 package game;
 
-import world.Player;
-import world.Postition;
+import server.Client;
+import server.Server;
 
-import java.awt.*;
-import java.awt.desktop.ScreenSleepEvent;
+import java.util.Scanner;
+
 
 public class Game {
 
-    GamePanel panel;
-    Player player = new Player("hi",12);
+
 
     public Game(int h, int w) {
 
-        panel = new GamePanel(h, w);
+        System.out.println(" client und server");
+        Scanner in = new Scanner(System.in);
+        String input = in.next();
 
-    }
+        System.out.println(input);
 
-    public void startclient() {
-
-        while (true) {
-
-
-
-            update();
+        if(input.equals("client")) {
+            startclient(h, w);
+            System.out.println("1");
         }
-    }
-
-
-    private void update() {
-
-        player.move(panel.getKeypressd(),10.0);
-        panel.playerupdate(player);
-        panel.setKeypressdnull();
-        panel.repaint();
-
+        if(input.equals("server")){
+            startserver();
+        }
 
 
     }
+
+    private void startclient(int h,int w) {
+        Client client = new Client(800,600);
+        client.start();
+    }
+
+    private void startserver(){
+
+        Server server = new Server();
+
+
+
+    }
+
+
+
 
 
 }
