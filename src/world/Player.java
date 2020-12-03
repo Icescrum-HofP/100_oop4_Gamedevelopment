@@ -6,6 +6,8 @@ public class Player extends Postition{
     private int id;
 
     public Player(String name_, int id_){
+        super(100.0,100.0);
+
         name = name_;
         id = id_;
 

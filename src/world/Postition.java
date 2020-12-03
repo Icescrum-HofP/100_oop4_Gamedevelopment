@@ -4,7 +4,7 @@ public abstract class Postition {
     private Double x;
     private Double y;
 
-    public Postition(){
+    public Postition(Double x_ , Double y_){
         x = 0.0;
         y = 0.0;
     }
@@ -25,5 +25,6 @@ public abstract class Postition {
     public void addpos (Double x_ , Double y_){
         x = x_ + x;
         y = y_ + y;
+        System.out.println(x +"|" +y);
     }
 }

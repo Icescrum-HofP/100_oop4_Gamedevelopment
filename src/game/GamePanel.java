@@ -38,7 +38,6 @@ public class GamePanel extends JPanel {
 
     }
 
-
     private ActionListener fpsTimer = new ActionListener() {
 
         @Override
