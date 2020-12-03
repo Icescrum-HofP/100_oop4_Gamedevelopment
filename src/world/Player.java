@@ -24,6 +24,9 @@ public class Player extends Postition{
             case "up":
                 super.addpos(0.0,-1*speed);
                 break;
+            case "down":
+                super.addpos(0.0,1*speed);
+                break;
         }
 
 

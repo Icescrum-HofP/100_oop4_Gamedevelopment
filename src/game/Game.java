@@ -4,11 +4,12 @@ import world.Player;
 import world.Postition;
 
 import java.awt.*;
+import java.awt.desktop.ScreenSleepEvent;
 
 public class Game {
 
     GamePanel panel;
-    Postition player = new Player("hi",12);
+    Player player = new Player("hi",12);
 
     public Game(int h, int w) {
 
@@ -26,18 +27,10 @@ public class Game {
 
     private void update() {
 
-        switch (panel.getKeypressd()) {
 
-            case "up":
-            case "left":
-            case "right":
-               //palyer
-
-                break;
-
-
-        }
-
+        player.move(panel.getKeypressd(),1.0);
+        panel.setKeypressdnull();
+        panel.repaint();
     }
 
 
