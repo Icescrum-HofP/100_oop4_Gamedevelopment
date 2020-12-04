@@ -30,15 +30,14 @@ public class Game {
     }
 
     private void startclient(int h,int w) {
-        Client client = new Client(800,600);
+        Client client = new Client(h,w);
         client.start();
     }
 
     private void startserver(){
 
         Server server = new Server();
-
-
+        server.start();
 
     }
 

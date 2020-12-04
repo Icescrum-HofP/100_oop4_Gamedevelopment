@@ -27,4 +27,13 @@ public abstract class Postition {
         y = y_ + y;
         System.out.println(x +"|" +y);
     }
+
+    public void setppos(Postition p){
+        this.x = p.x;
+        this.y = p.y;
+    }
+
+    public String toString(){
+        return x+"|"+y;
+    }
 }

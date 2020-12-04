@@ -1,25 +1,31 @@
 package server;
 
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
 
+    private ServerSocket server;
+    private Socket client;
     public Server()  {
 
         try{
-            ServerSocket server = new ServerSocket(5555);
+            server = new ServerSocket(5556);
 
-
-            Socket client = server.accept();
+             client = server.accept();
 
             OutputStream out = client.getOutputStream();
 
-            System.out.println(out);
 
-            System.out.println("serverstart1");
+            InputStream in = client.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String s = null;
+
+            while ((s = reader.readLine())!= null){
+                System.out.println(s);
+            }
+            reader.close();
 
         }catch(IOException e ){
 
@@ -30,6 +36,30 @@ public class Server {
         System.out.println("serverstart");
     }
 
+    public void start(){
+
+        while(true){
+
+
+            try {
+                if(client.getInputStream() != null) {
+                    InputStream in = client.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                    String s = null;
+
+                    while ((s = reader.readLine()) != null) {
+                        System.out.println(s);
+                    }
+
+                    reader.close();
+                }
+            }catch (IOException e){e.printStackTrace();}
+
+
+        }
+
+
+    }
 
 
 }

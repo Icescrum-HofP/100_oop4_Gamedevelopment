@@ -11,13 +11,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.Arc2D;
+import java.util.ArrayList;
 
 public class GamePanel extends JPanel {
 
     private long fps = 0;
     private long frames = 0;
     private String keypressd = "";
-    private Postition player;
+    private ArrayList<Player> player;
 
     public GamePanel(int h, int w) {
         this.setPreferredSize(new Dimension(w, h));
@@ -30,6 +31,7 @@ public class GamePanel extends JPanel {
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
         doInitialisations();
+        player = new ArrayList<Player>();
 
 
         Timer fpsHelper = new Timer(1000, fpsTimer);
@@ -53,8 +55,12 @@ public class GamePanel extends JPanel {
         }
     };
 
+    public void addPlayer(Player p){
+        player.add(p);
+    }
+
     public void playerupdate(Player p){
-        player = p;
+        player.get(0).setppos(p);
     }
 
     @Override
@@ -63,7 +69,7 @@ public class GamePanel extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
 
         frames++;
-        g2.drawRect((int)player.getX(),(int)player.getY() , 40, 40);
+        g2.drawRect((int)player.get(0).getX(),(int)player.get(0).getY() , 40, 40);
 
         g2.setColor(Color.red);
         g2.drawString("FPS: " + Long.toString(fps), 20, 10);
