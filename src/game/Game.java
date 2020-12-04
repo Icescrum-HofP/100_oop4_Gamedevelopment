@@ -20,7 +20,6 @@ public class Game {
 
         if(input.equals("client")) {
             startclient(h, w);
-            System.out.println("1");
         }
         if(input.equals("server")){
             startserver();

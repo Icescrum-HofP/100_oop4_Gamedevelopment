@@ -85,10 +85,9 @@ public class GamePanel extends JPanel {
         @Override
         public void keyPressed(KeyEvent e) {
 
-            System.out.println("hi2");
+
             if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
                 keypressd = "up";
-                System.out.println("hi");
             }
 
             if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {

@@ -8,6 +8,10 @@ public class Server {
 
     private ServerSocket server;
     private Socket client;
+    private InputStream in;
+    private OutputStream out;
+    private int id;
+
     public Server()  {
 
         try{
@@ -15,17 +19,16 @@ public class Server {
 
              client = server.accept();
 
-            OutputStream out = client.getOutputStream();
+             out = client.getOutputStream();
 
 
-            InputStream in = client.getInputStream();
+            in = client.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
             String s = null;
 
             while ((s = reader.readLine())!= null){
                 System.out.println(s);
             }
-            reader.close();
 
         }catch(IOException e ){
 
@@ -33,7 +36,7 @@ public class Server {
          e.printStackTrace();
 
         }
-        System.out.println("serverstart");
+        accapt();
     }
 
     public void start(){
@@ -42,8 +45,8 @@ public class Server {
 
 
             try {
-                if(client.getInputStream() != null) {
-                    InputStream in = client.getInputStream();
+                if(in != null) {
+                    System.out.println("hier");
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                     String s = null;
 
@@ -51,7 +54,7 @@ public class Server {
                         System.out.println(s);
                     }
 
-                    reader.close();
+
                 }
             }catch (IOException e){e.printStackTrace();}
 
@@ -60,6 +63,17 @@ public class Server {
 
 
     }
+
+    private void accapt(){
+        new Thread(() -> {
+            try {
+                client =  server.accept();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
 
 
 }

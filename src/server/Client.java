@@ -8,28 +8,28 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.rmi.server.LogStream;
 
 public class Client {
 
     private GamePanel panel;
     private Player player = new Player("hi", 12);
     private Socket client;
+    InputStream in ;
+    OutputStream out ;
 
     public Client(int h, int w) {
 
         try {
             client = new Socket("localhost", 5556);
-            System.out.println("client start");
             panel = new GamePanel(h, w);
             panel.addPlayer(player);
 
-            InputStream in = client.getInputStream();
-            OutputStream out = client.getOutputStream();
+             in = client.getInputStream();
+             out = client.getOutputStream();
             PrintWriter print = new PrintWriter(out);
             print.write("hey iam connectet");
             print.flush();
-            print.close();
+
 
 
 
@@ -52,13 +52,12 @@ public class Client {
     public void serverupdate(){
 
         try{
-            OutputStream out = client.getOutputStream();
+            out = client.getOutputStream();
             PrintWriter print = new PrintWriter(out);
-            print.write("my location is behind you" + player.toString());
+            print.write("my location is behind you" + player.toString()+"\n");
             print.flush();
-            print.close();
-        }catch ( IOException e){e.printStackTrace();}
 
+        }catch ( IOException e){e.printStackTrace();}
 
 
 
@@ -75,6 +74,8 @@ public class Client {
 
 
     }
+
+
 
 
 }
