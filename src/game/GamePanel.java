@@ -19,6 +19,7 @@ public class GamePanel extends JPanel {
     private long frames = 0;
     private String keypressd = "";
     private ArrayList<Player> player;
+    private ArrayList<Player> ennemy;
 
     public GamePanel(int h, int w) {
         this.setPreferredSize(new Dimension(w, h));
@@ -30,22 +31,14 @@ public class GamePanel extends JPanel {
         frame.pack();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
-        doInitialisations();
         player = new ArrayList<Player>();
-
+        ennemy = new ArrayList<Player>();
 
         Timer fpsHelper = new Timer(1000, fpsTimer);
         fpsHelper.restart();
-
-    }
-
-    private void doInitialisations() {
-
-
     }
 
     private ActionListener fpsTimer = new ActionListener() {
-
         @Override
         public void actionPerformed(ActionEvent e) {
 
@@ -55,11 +48,11 @@ public class GamePanel extends JPanel {
         }
     };
 
-    public void addPlayer(Player p){
+    public void addPlayer(Player p) {
         player.add(p);
     }
 
-    public void playerupdate(Player p){
+    public void playerupdate(Player p) {
         player.get(0).setppos(p);
     }
 
@@ -69,12 +62,19 @@ public class GamePanel extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
 
         frames++;
-        g2.drawRect((int)player.get(0).getX(),(int)player.get(0).getY() , 40, 40);
-
+        g2.drawRect((int) player.get(0).getX(), (int) player.get(0).getY(), 40, 40);
+        for (int i = 0; i < ennemy.size(); i++) {
+            g2.drawRect((int) ennemy.get(i).getX(), (int) ennemy.get(i).getY(), 40, 40);
+        }
         g2.setColor(Color.red);
         g2.drawString("FPS: " + Long.toString(fps), 20, 10);
 
     }
+
+    public void enemyupdate(ArrayList<Player> in) {
+        ennemy = in;
+    }
+
 
     private KeyListener e = new KeyListener() {
 
@@ -100,6 +100,10 @@ public class GamePanel extends JPanel {
 
             if (e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_DOWN) {
                 keypressd = "down";
+            }
+
+            if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                System.exit(1);
             }
 
         }
