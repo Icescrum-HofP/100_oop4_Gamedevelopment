@@ -6,10 +6,7 @@ import world.Postition;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.awt.geom.Arc2D;
 import java.util.ArrayList;
 
@@ -41,10 +38,8 @@ public class GamePanel extends JPanel {
     private ActionListener fpsTimer = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-
             fps = frames;
             frames = 0;
-
         }
     };
 

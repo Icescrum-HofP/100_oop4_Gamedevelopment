@@ -12,7 +12,6 @@ public class Server {
     private ArrayList<Socket> clients;
     private ArrayList<ArrayList<String>> listofpos;
 
-
     public Server() {
 
         try {
@@ -22,93 +21,122 @@ public class Server {
             Socket client;
             client = server.accept();
             clients.add(client);
-            listofpos.add(new ArrayList<String>());
+            listofpos.add(new ArrayList<String>(25));
+            accapt();
+            output();
+            parse();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void start() {
-        accapt();
-        output();
-        parse();
+        System.out.println("started");
+        while (true) {
+            //System.out.println("---------------------------------------------------------------");
+            if (listofpos.get(0).size() > 1) {
+                for (int i = 0; i < listofpos.size(); i++) {
+                    if (listofpos.get(i).size() > 2) {
+                       // System.out.println(listofpos.get(i).toString());
+                    }
+                }
+            }
+        }
     }
 
     private void output() {
         new Thread(() -> {
             try {
-                System.out.println("thread output has started");
+                // System.out.println("thread output has started");
                 while (true) {
                     for (int i = 0; i < clients.size(); i++) {
                         InputStream ini = clients.get(i).getInputStream();
                         BufferedReader reader = new BufferedReader(new InputStreamReader(ini));
                         String s = null;
                         while ((s = reader.readLine()) != null) {
-                            listofpos.get(i).add(s);
-                            System.out.println(s + " von der nr " + i);
+                            if (listofpos.get(i).size() < 10) {
+                                listofpos.get(i).add(s);
+                                //    System.out.println("check ---> " + i);
+                            } else {
+                                int check = 5;
+                                for (int j = (listofpos.get(i).size() - 5); j < listofpos.get(i).size(); j++) {
+                                    if (listofpos.get(i).get(j).equals(s)) {
+                                        check--;
+                                        System.out.println("geh mir nd aufn sack -->" + j);
+                                    }
+                                }
+                                if (check == 5) {
+                                    listofpos.get(i).add(s);
+                                    System.out.println("wurde geaddedt ");
+                                    //     System.out.println(check + "--->" + i);
+                                    //  System.out.println(s + " von der nr " + i);
+                                }
+                            }
                             break;
                         }
                     }
+                    Thread.yield();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }).start();
-
     }
 
-
+    //-------------------------------------------------------------------------------------------
     private void parse() {
         new Thread(() -> {
             try {
-                //System.out.println(clients.size() + " client size");
                 while (true) {
                     if (clients.size() > 1) {
+                        Thread.sleep(10);
+                        // System.out.println(System.nanoTime());
                         for (int i = 0; i < clients.size(); i++) {
-                            System.out.println(" client nr : " + i);
                             OutputStream out = clients.get(i).getOutputStream();
                             PrintWriter print = new PrintWriter(out);
-                            String output = (clients.size() - 1) + "|";
+                            String output = (clients.size() - 1) + ",";
+                            //System.out.println(System.currentTimeMillis());
                             for (int j = 0; j < listofpos.size(); j++) {
-                                //not the own pos
-
-                                if (i != j) {
-                                    System.out.println(listofpos.get(j).size() + " ich bin im if");
-                                    output += listofpos.get(j).get(0) + "|";
+                                if (i != j && listofpos.get(j).size() > 1) {
+                                    //System.out.println(listofpos.get(j).size() + " ich bin im if");
+                                    output += listofpos.get(j).get(0) + ",";
                                     listofpos.get(j).remove(0);
+                                       System.out.println(output);
                                 } else {
-                                    System.out.println("auserhalb :" + j);
+                                    // System.out.println("drausen");
                                 }
                             }
                             print.write(output + "\n");
                             print.flush();
+                            //  System.out.println(System.currentTimeMillis());
                         }
                     }
+                    Thread.yield();
                 }
-            } catch (IOException e) {
+            } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
         }).start();
     }
 
+    //---------------------------------------------------------------------------------------------
     private void accapt() {
         new Thread(() -> {
             try {
-                System.out.println("hier");
+                //    System.out.println("hier");
                 while (true) {
                     Socket clin;
                     if ((clin = server.accept()) != null) {
                         clients.add(clin);
-                        listofpos.add(new ArrayList<String>());
+                        listofpos.add(new ArrayList<String>(25));
                         listofpos.get(listofpos.size() - 1).add("0.0|0.0");
-                        System.out.println("one client has joind");
+                        //  System.out.println("one client has joind");
                     }
+                    Thread.yield();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }).start();
     }
-
-
 }

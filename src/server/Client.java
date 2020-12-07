@@ -7,6 +7,7 @@ import world.Postition;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Client {
 
@@ -23,6 +24,8 @@ public class Client {
             client = new Socket("localhost", 5556);
             panel = new GamePanel(h, w);
             panel.addPlayer(player);
+            player.setpos(100.0,100.0);
+            panel.addPlayer(player);
             enemypos = new ArrayList<Player>();
             packages = 1;
         } catch (IOException e) {
@@ -32,29 +35,33 @@ public class Client {
         System.out.println("client startet");
     }
 
-    public void start() {
+    public void start(){
         recive();
         serverupdate();
+        try{
         while (true) {
+            Thread.sleep(10);
             update();
-        }
+        }}catch (InterruptedException e){e.printStackTrace();}
     }
 
     public void serverupdate() {
         new Thread(() -> {
             try {
-                while (true){
-                if (packages > 21) {
-                    Thread.sleep(200);
+                while (true) {
+                    if (packages > 21) {
+                        Thread.sleep(90);
+                    }
+                    packages++;
+                    out = client.getOutputStream();
+                    PrintWriter print = new PrintWriter(out);
+                    print.write(player.toString() + "\n");
+                    print.flush();
                 }
-                packages++;
-                out = client.getOutputStream();
-                PrintWriter print = new PrintWriter(out);
-                print.write(player.toString() + "\n");
-                print.flush();}
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
+            Thread.yield();
         }).start();
 
     }
@@ -67,22 +74,24 @@ public class Client {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                     String s = null;
                     while ((s = reader.readLine()) != null) {
-                        String posall[] = s.split("|");
+                        String posall[] = s.split(",");
                         System.out.println(s);
-                        if (Integer.parseInt(posall[0]) == enemypos.size()) {
-                            for (int i = enemypos.size(); i <= Integer.parseInt(posall[0]); i++) {
-                                enemypos.add(new Player("enemy " + i, i));
+                        if (posall.length >= 3) {
+                            if (Integer.parseInt(posall[0]) != enemypos.size() && enemypos.size() < Integer.parseInt(posall[0])) {
+                                for (int i = enemypos.size(); i < Integer.parseInt(posall[0]); i++) {
+                                    enemypos.add(new Player("enemy " + i, i));
+                                    System.out.println("ich bin im erzeuger");
+                                }
+                            }
+                            for (int i = 0; i < enemypos.size(); i++) {
+                                System.out.println(posall[(1 * (i + 1))]);
+                                System.out.println(posall[2 * (i + 1)]);
+                                enemypos.get(i).setpos(Double.parseDouble(posall[(1 * (i + 1))]), Double.parseDouble(posall[2 * (i + 1)]));
+                               // System.out.println(enemypos.get(i).toString() + " ///");
                             }
                         }
-                        for (int i = 0; i < enemypos.size(); i++) {
-                            enemypos.get(i).setpos(Double.parseDouble(posall[(1 * (i + 1))]), Double.parseDouble(posall[2 * (i + 1)]));
-                          //  System.out.println(enemypos.get(i).toString());
-                        }
-
-
-
-
                     }
+                    Thread.yield();
                 }
             } catch (IOException e) {
                 e.printStackTrace();

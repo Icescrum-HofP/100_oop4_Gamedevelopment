@@ -34,6 +34,6 @@ public abstract class Postition {
     }
 
     public String toString(){
-        return x+"|"+y;
+        return x+","+y;
     }
 }
