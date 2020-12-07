@@ -14,6 +14,7 @@ public class Client {
     private Player player = new Player("hi", 12);
     private ArrayList<Player> enemypos;
     private Socket client;
+    private int packages;
     InputStream in;
     OutputStream out;
 
@@ -23,6 +24,7 @@ public class Client {
             panel = new GamePanel(h, w);
             panel.addPlayer(player);
             enemypos = new ArrayList<Player>();
+            packages = 1;
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("fehler");
@@ -32,38 +34,54 @@ public class Client {
 
     public void start() {
         recive();
+        serverupdate();
         while (true) {
             update();
-            serverupdate();
         }
     }
 
     public void serverupdate() {
-        try {
-            out = client.getOutputStream();
-            PrintWriter print = new PrintWriter(out);
-            print.write(player.toString() + "\n");
-            print.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        new Thread(() -> {
+            try {
+                while (true){
+                if (packages > 21) {
+                    Thread.sleep(200);
+                }
+                packages++;
+                out = client.getOutputStream();
+                PrintWriter print = new PrintWriter(out);
+                print.write(player.toString() + "\n");
+                print.flush();}
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
     }
 
     public void recive() {
         new Thread(() -> {
             try {
-                in = client.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                String s = null;
-                while ((s = reader.readLine()) != null) {
-                    String posall[] = s.split("|");
-                    if (Integer.parseInt(posall[0]) == enemypos.size()) {
-                        for (int i = enemypos.size(); i <= Integer.parseInt(posall[0]); i++) {
-                            enemypos.add(new Player("enemy " + i, i));
+                while (true) {
+                    in = client.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                    String s = null;
+                    while ((s = reader.readLine()) != null) {
+                        String posall[] = s.split("|");
+                        System.out.println(s);
+                        if (Integer.parseInt(posall[0]) == enemypos.size()) {
+                            for (int i = enemypos.size(); i <= Integer.parseInt(posall[0]); i++) {
+                                enemypos.add(new Player("enemy " + i, i));
+                            }
                         }
-                    }
-                    for (int i = 0; i < enemypos.size(); i++) {
-                        enemypos.get(i).setpos(Double.parseDouble(posall[(1 * (i + 1))]), Double.parseDouble(posall[2 * (i + 1)]));
+                        for (int i = 0; i < enemypos.size(); i++) {
+                            enemypos.get(i).setpos(Double.parseDouble(posall[(1 * (i + 1))]), Double.parseDouble(posall[2 * (i + 1)]));
+                          //  System.out.println(enemypos.get(i).toString());
+                        }
+
+
+
+
                     }
                 }
             } catch (IOException e) {

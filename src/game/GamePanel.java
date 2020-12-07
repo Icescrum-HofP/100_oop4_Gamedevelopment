@@ -75,7 +75,6 @@ public class GamePanel extends JPanel {
         ennemy = in;
     }
 
-
     private KeyListener e = new KeyListener() {
 
         @Override

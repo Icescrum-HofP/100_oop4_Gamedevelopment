@@ -12,6 +12,7 @@ public class Server {
     private ArrayList<Socket> clients;
     private ArrayList<ArrayList<String>> listofpos;
 
+
     public Server() {
 
         try {
@@ -30,61 +31,77 @@ public class Server {
     public void start() {
         accapt();
         output();
-        while (true) {
-            parse();
-        }
+        parse();
     }
 
     private void output() {
         new Thread(() -> {
-        try {
-            for (int i = 0; i < clients.size(); i++) {
-                InputStream ini = clients.get(i).getInputStream();
-                if (ini != null) {
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(ini));
-                    String s = null;
-                    while ((s = reader.readLine()) != null) {
-                        listofpos.get(i).add(s);
-                        break;
+            try {
+                System.out.println("thread output has started");
+                while (true) {
+                    for (int i = 0; i < clients.size(); i++) {
+                        InputStream ini = clients.get(i).getInputStream();
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(ini));
+                        String s = null;
+                        while ((s = reader.readLine()) != null) {
+                            listofpos.get(i).add(s);
+                            System.out.println(s + " von der nr " + i);
+                            break;
+                        }
                     }
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }}).start();
+        }).start();
 
     }
 
 
-    private void parse(){
+    private void parse() {
+        new Thread(() -> {
+            try {
+                //System.out.println(clients.size() + " client size");
+                while (true) {
+                    if (clients.size() > 1) {
+                        for (int i = 0; i < clients.size(); i++) {
+                            System.out.println(" client nr : " + i);
+                            OutputStream out = clients.get(i).getOutputStream();
+                            PrintWriter print = new PrintWriter(out);
+                            String output = (clients.size() - 1) + "|";
+                            for (int j = 0; j < listofpos.size(); j++) {
+                                //not the own pos
 
-        try {
-                for(int i =0 ; i < clients.size(); i++){
-                    OutputStream out = clients.get(i).getOutputStream();
-                    PrintWriter print = new PrintWriter(out);
-                    String output = (clients.size()-1)+"|";
-                    for(int j= 0; j<listofpos.size(); j++){
-                        output += listofpos.get(j).get(0)+"|";
-                        listofpos.get(j).remove(0);
+                                if (i != j) {
+                                    System.out.println(listofpos.get(j).size() + " ich bin im if");
+                                    output += listofpos.get(j).get(0) + "|";
+                                    listofpos.get(j).remove(0);
+                                } else {
+                                    System.out.println("auserhalb :" + j);
+                                }
+                            }
+                            print.write(output + "\n");
+                            print.flush();
+                        }
                     }
-                    print.write(output+"\n");
-                    print.flush();
                 }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     private void accapt() {
         new Thread(() -> {
             try {
                 System.out.println("hier");
-                while(true) {
+                while (true) {
                     Socket clin;
                     if ((clin = server.accept()) != null) {
                         clients.add(clin);
-                        System.out.println("one client has been joind");
+                        listofpos.add(new ArrayList<String>());
+                        listofpos.get(listofpos.size() - 1).add("0.0|0.0");
+                        System.out.println("one client has joind");
                     }
                 }
             } catch (IOException e) {
