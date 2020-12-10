@@ -33,6 +33,36 @@ public abstract class Postition {
         this.y = p.y;
     }
 
+    public void move(boolean u, boolean d, boolean r, boolean l, double speed){
+        double up = 0;
+        double down = 0;
+        double right = 0;
+        double left= 0;
+
+        if(u){
+         up = -1;
+        }
+        if(d){
+            down = 1;
+        }
+        if(r){
+            right = 1;
+        }
+        if(l){
+            left = -1;
+        }
+
+        x = x + (left* speed);
+        x = x + (right * speed);
+        y = y + (up * speed);
+        y = y + (down * speed);
+
+    }
+
+
+
+
+
     public String toString(){
         return x+","+y;
     }

@@ -1,20 +1,22 @@
 package game;
 
-import drawing.Drawing;
-import world.Player;
-import world.Postition;
+import entities.Player;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.Arc2D;
 import java.util.ArrayList;
 
 public class GamePanel extends JPanel {
 
     private long fps = 0;
     private long frames = 0;
-    private String keypressd = "";
+    //---------Key---------
+    private boolean up;
+    private boolean down;
+    private boolean right;
+    private boolean left;
+    //--------Players-----
     private ArrayList<Player> player;
     private ArrayList<Player> ennemy;
 
@@ -35,6 +37,8 @@ public class GamePanel extends JPanel {
         fpsHelper.restart();
     }
 
+
+    //FPS-----------------------------------------------------------------------
     private ActionListener fpsTimer = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -43,33 +47,54 @@ public class GamePanel extends JPanel {
         }
     };
 
+
+    // Player / Enemy update------------------------------------------------------------
     public void addPlayer(Player p) {
         player.add(p);
     }
 
-    public void playerupdate(Player p) {
-        player.get(0).setppos(p);
-    }
-
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
-
-        frames++;
-        g2.drawRect((int) player.get(0).getX(), (int) player.get(0).getY(), 40, 40);
-        for (int i = 0; i < ennemy.size(); i++) {
-            g2.drawRect((int) ennemy.get(i).getX(), (int) ennemy.get(i).getY(), 40, 40);
-        }
-        g2.setColor(Color.red);
-        g2.drawString("FPS: " + Long.toString(fps), 20, 10);
-
+    public void playerupdate(double speed) {
+        player.get(0).move(up,down,right,left,speed);
     }
 
     public void enemyupdate(ArrayList<Player> in) {
         ennemy = in;
     }
 
+    //Paint---------------------------------------------------------------------
+    @Override
+    public void paintComponent(Graphics g) {
+        frames++;
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
+
+        player.get(0).paintComponent(g);
+        for (int i = 0; i < ennemy.size(); i++) {
+            ennemy.get(i).paintComponent(g);
+        }
+        g2.setColor(Color.red);
+        g2.drawString("FPS: " + Long.toString(fps), 20, 10);
+
+    }
+
+    // GETTER ------------------------------------------
+    public boolean isUp() {
+        return up;
+    }
+
+    public boolean isDown() {
+        return down;
+    }
+
+    public boolean isRight() {
+        return right;
+    }
+
+    public boolean isLeft() {
+        return left;
+    }
+
+    // Keylistener----------------------------------------------------------------------------
     private KeyListener e = new KeyListener() {
 
         @Override
@@ -81,19 +106,19 @@ public class GamePanel extends JPanel {
 
 
             if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
-                keypressd = "up";
+                up = true;
             }
 
             if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
-                keypressd = "left";
+                left = true;
             }
 
             if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
-                keypressd = "right";
+                right = true;
             }
 
             if (e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_DOWN) {
-                keypressd = "down";
+                down = true;
             }
 
             if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -106,37 +131,31 @@ public class GamePanel extends JPanel {
         public void keyReleased(KeyEvent e) {
 
             if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
-                keypressd = "";
+                up = false;
             }
 
             if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
-                keypressd = "";
+                left = false;
             }
 
             if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
-                keypressd = "";
+                down = false;
             }
 
             if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
-                keypressd = "";
+                right = false;
             }
 
             if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                keypressd = "";
+
             }
 
             if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                keypressd = "";
+
             }
         }
     };
 
-    public void setKeypressdnull() {
-        this.keypressd = "";
-    }
 
-    public String getKeypressd() {
-        return keypressd;
-    }
 }
 

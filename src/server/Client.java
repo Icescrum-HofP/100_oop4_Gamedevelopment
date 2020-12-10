@@ -1,13 +1,11 @@
 package server;
 
 import game.GamePanel;
-import world.Player;
-import world.Postition;
+import entities.Player;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Client {
 
@@ -16,8 +14,9 @@ public class Client {
     private ArrayList<Player> enemypos;
     private Socket client;
     private int packages;
-    InputStream in;
-    OutputStream out;
+    private double speed;
+    private InputStream in;
+    private OutputStream out;
 
     public Client(int h, int w) {
         try {
@@ -28,6 +27,7 @@ public class Client {
             panel.addPlayer(player);
             enemypos = new ArrayList<Player>();
             packages = 1;
+            speed = 2.3;
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("fehler");
@@ -100,9 +100,7 @@ public class Client {
     }
 
     private void update() {
-        player.move(panel.getKeypressd(), 10.0);
-        panel.playerupdate(player);
-        panel.setKeypressdnull();
+        panel.playerupdate(speed);
         panel.enemyupdate(enemypos);
         panel.repaint();
     }
