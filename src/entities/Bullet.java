@@ -17,23 +17,17 @@ public class Bullet extends Postition {
     public Bullet(Player player, Pos postition) {
         super(player.getX(), player.getY());
         getlenght(player, postition);
-        System.out.println("bullet made "+ postition.toString() );
     }
 
     private void getlenght(Player player, Pos postition){
         xdiv= (player.getX() - postition.getX());
         ydiv = (player.getY() - postition.getY());
-        System.out.println(xdiv + "," + ydiv);
         lenghttarget = Math.sqrt(((ydiv*ydiv) + (xdiv*xdiv)));
-        System.out.println(xdiv +" | " + ydiv);
     }
 
     private void move(){
         double xspeed = ((xdiv*xdiv)/2)/100;
         double yspeed = ((ydiv*ydiv)/2)/100;
-
-        System.out.println(((xdiv/((xdiv*xdiv)/2))));
-        System.out.println(yspeed*(ydiv/((ydiv*ydiv)/2)));
         super.setX(super.getX()+(xspeed*(xdiv/((xdiv*xdiv)/2))*-1));
         super.setY(super.getY()+(yspeed*(ydiv/((ydiv*ydiv)/2))*-1));
 
@@ -41,6 +35,7 @@ public class Bullet extends Postition {
 
     public void paintComponent(Graphics g) {
         count ++;
+        System.out.println(count);
         move();
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.GREEN);
@@ -48,7 +43,8 @@ public class Bullet extends Postition {
     }
 
     public boolean hasfinished (){
-        if(count == 100){
+        if(count >= 100){
+
             return true;
         }
         return false;

@@ -159,7 +159,6 @@ public class GamePanel extends JPanel {
 
         @Override
         public void mousePressed(MouseEvent e) {
-            System.out.println("bullet fired " + (double) e.getX() + " , " + (double) e.getY());
             double x = e.getX();
             double y = e.getY();
             Pos p = new Pos(x, y);
@@ -192,12 +191,16 @@ public class GamePanel extends JPanel {
 
     public void bulletcheck() {
         new Thread(() -> {
-            for(int i = 0 ; i < bullets.size(); i++){
-                if(bullets.get(i).hasfinished()){
-                    bullets.remove(i);
+            System.out.println("hier");
+            while (true) {
+                for (int i = 0; i < bullets.size(); i++) {
+                    if (bullets.get(i).hasfinished()) {
+                        bullets.remove(i);
+                    }
                 }
+                Thread.yield();
             }
-        });
+        }).start();
     }
 
 }
