@@ -5,8 +5,8 @@ public abstract class Postition {
     private double y;
 
     public Postition(Double x_ , Double y_){
-        x = 0.0;
-        y = 0.0;
+        x = x_;
+        y = y_;
     }
 
     public double getX() {
@@ -59,9 +59,13 @@ public abstract class Postition {
 
     }
 
+    public void setX(double x) {
+        this.x = x;
+    }
 
-
-
+    public void setY(double y) {
+        this.y = y;
+    }
 
     public String toString(){
         return x+","+y;

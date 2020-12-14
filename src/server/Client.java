@@ -50,7 +50,7 @@ public class Client {
             try {
                 while (true) {
                     if (packages > 21) {
-                        Thread.sleep(90);
+                        Thread.sleep(50);
                     }
                     packages++;
                     out = client.getOutputStream();

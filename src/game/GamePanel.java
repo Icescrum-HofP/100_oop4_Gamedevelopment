@@ -1,6 +1,9 @@
 package game;
 
+import entities.Bullet;
 import entities.Player;
+import world.Pos;
+import world.Postition;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,9 +19,10 @@ public class GamePanel extends JPanel {
     private boolean down;
     private boolean right;
     private boolean left;
-    //--------Players-----
-    private ArrayList<Player> player;
+    //------Entities------
+    private Player player;
     private ArrayList<Player> ennemy;
+    private ArrayList<Bullet> bullets;
 
     public GamePanel(int h, int w) {
         this.setPreferredSize(new Dimension(w, h));
@@ -26,13 +30,14 @@ public class GamePanel extends JPanel {
         frame.setLocation(100, 100);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(this);
+        frame.addMouseListener(mouseListener);
         frame.addKeyListener(e);
         frame.pack();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
-        player = new ArrayList<Player>();
         ennemy = new ArrayList<Player>();
-
+        bullets = new ArrayList<Bullet>();
+        bulletcheck();
         Timer fpsHelper = new Timer(1000, fpsTimer);
         fpsHelper.restart();
     }
@@ -48,13 +53,13 @@ public class GamePanel extends JPanel {
     };
 
 
-    // Player / Enemy update------------------------------------------------------------
+    // Player / Enemy / Bullet update------------------------------------------------------------
     public void addPlayer(Player p) {
-        player.add(p);
+        player = p;
     }
 
     public void playerupdate(double speed) {
-        player.get(0).move(up,down,right,left,speed);
+        player.move(up, down, right, left, speed);
     }
 
     public void enemyupdate(ArrayList<Player> in) {
@@ -68,31 +73,21 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        player.get(0).paintComponent(g);
+        player.paintComponent(g);
+
         for (int i = 0; i < ennemy.size(); i++) {
             ennemy.get(i).paintComponent(g);
         }
+
+
+        for (int i = 0; i < bullets.size(); i++) {
+            bullets.get(i).paintComponent(g);
+        }
+
         g2.setColor(Color.red);
         g2.drawString("FPS: " + Long.toString(fps), 20, 10);
-
     }
 
-    // GETTER ------------------------------------------
-    public boolean isUp() {
-        return up;
-    }
-
-    public boolean isDown() {
-        return down;
-    }
-
-    public boolean isRight() {
-        return right;
-    }
-
-    public boolean isLeft() {
-        return left;
-    }
 
     // Keylistener----------------------------------------------------------------------------
     private KeyListener e = new KeyListener() {
@@ -156,6 +151,54 @@ public class GamePanel extends JPanel {
         }
     };
 
+    private MouseListener mouseListener = new MouseListener() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            System.out.println("bullet fired " + (double) e.getX() + " , " + (double) e.getY());
+            double x = e.getX();
+            double y = e.getY();
+            Pos p = new Pos(x, y);
+            Bullet bullet = new Bullet(player, p);
+            bullets.add(bullet);
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException interruptedException) {
+                interruptedException.printStackTrace();
+            }
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+
+        }
+    };
+
+    // Threads--------------------------------------------------------------------------------
+
+    public void bulletcheck() {
+        new Thread(() -> {
+            for(int i = 0 ; i < bullets.size(); i++){
+                if(bullets.get(i).hasfinished()){
+                    bullets.remove(i);
+                }
+            }
+        });
+    }
 
 }
 
