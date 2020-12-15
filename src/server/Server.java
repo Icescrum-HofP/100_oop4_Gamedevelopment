@@ -31,7 +31,7 @@ public class Server {
     }
 
     public void start() {
-        System.out.println("started");
+        //System.out.println("started");
         while (true) {
             //System.out.println("---------------------------------------------------------------");
             if (listofpos.get(0).size() > 1) {

@@ -15,7 +15,7 @@ public class Bullet extends Postition {
     private double defauldspeed = 2;
 
     public Bullet(Player player, Pos postition) {
-        super(player.getX(), player.getY());
+        super((player.getX()+ player.getW()/2), (player.getY() + player.getH()/2));
         getlenght(player, postition);
     }
 
@@ -44,7 +44,6 @@ public class Bullet extends Postition {
 
     public boolean hasfinished (){
         if(count >= 100){
-
             return true;
         }
         return false;
