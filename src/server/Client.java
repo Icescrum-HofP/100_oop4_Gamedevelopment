@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Client {
 
     private GamePanel panel;
-    private Player player = new Player("hi", 12);
+    private Player player = new Player("Player", 12);
     private ArrayList<Player> enemypos;
     private Socket client;
     private int packages;
@@ -63,7 +63,6 @@ public class Client {
             }
             Thread.yield();
         }).start();
-
     }
 
     public void recive() {

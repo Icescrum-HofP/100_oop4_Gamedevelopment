@@ -1,32 +1,24 @@
 package world;
 
+import world.input.MapReader;
+
 import java.util.ArrayList;
 
 public class Maplayer {
 
-    private int mapnumber;
-    private String mapdata;
-    private ArrayList<Object> objects;
+    private ArrayList<MapReader> maps;
 
+    public Maplayer(){
+        maps = new ArrayList<MapReader>();
 
-    public Maplayer(int mapnum){
-        mapnumber = mapnum;
-        mapdata = null;
-        objects = new ArrayList<Object>();
+        for(int i = 0; i<= 1;i++) {
+            MapReader next = new MapReader(i);
+            maps.add(next);
+        }
     }
 
-    private String inportmapfile(){
-
-        // txt file gets importet and with diferent sings
-
-
-
-
-
-        return null;
+    public MapReader getmap(int mapid){
+        return maps.get(mapid);
     }
-
-
-
 
 }
