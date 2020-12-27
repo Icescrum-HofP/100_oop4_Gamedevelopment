@@ -2,6 +2,7 @@ package server;
 
 import game.GamePanel;
 import entities.Player;
+import input.settings.Serversettings;
 
 import java.io.*;
 import java.net.Socket;
@@ -14,13 +15,15 @@ public class Client {
     private ArrayList<Player> enemypos;
     private Socket client;
     private int packages;
+    private Serversettings settings;
     private double speed;
     private InputStream in;
     private OutputStream out;
 
     public Client(int h, int w) {
         try {
-            client = new Socket("localhost", 5556);
+            client = new Socket( settings = new Serversettings("test");
+            client = new Socket(settings.getIp(), settings.getPort()););
             panel = new GamePanel(h, w);
             panel.addPlayer(player);
             player.setpos(100.0,100.0);
