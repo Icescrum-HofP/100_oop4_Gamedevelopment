@@ -13,7 +13,7 @@ public class Tiles {
     private int y;
     private int pixel;
 
-    public Tiles(String name , int pix, int add)  {
+    public Tiles(String name , int pix)  {
         pixel = pix;
         try {
             String way = "src\\tilese\\" + name + ".png";
@@ -27,7 +27,7 @@ public class Tiles {
 
             for(int i=0; i < tieles.length ;i++){
                 for(int j=0; j < tieles[i].length ;j++){
-                    RenderedImage imgr = image.getSubimage((j*pix)+add,(i*pix)+add,pix,pix);
+                    RenderedImage imgr = image.getSubimage((j*pix),(i*pix),pix,pix);
                     tieles[i][j]=(Image)imgr;
                 }
             }

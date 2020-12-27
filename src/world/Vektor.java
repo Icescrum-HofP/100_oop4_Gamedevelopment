@@ -1,26 +1,33 @@
 package world;
 
-public abstract class Postition {
+public abstract class Vektor {
+
     private double x;
     private double y;
+    private double h;
+    private double w;
 
-    public Postition(Double x_ , Double y_){
+    // Constuctors
+
+    public Vektor(double x_ , double y_){
         x = x_;
         y = y_;
     }
 
-    public double getX() {
-        return x;
+    public Vektor(double x_ , double y_,double h_,double w_){
+        x = x_;
+        y = y_;
+        h = h_;
+        w = w_;
     }
 
-    public double getY() {
-        return y;
+    // Other
+
+    public String toString(){
+        return x+","+y;
     }
 
-    public void setpos (double x_ , double y_){
-        x= x_;
-        y= y_;
-    }
+
 
     public void addpos (double x_ , double y_){
         x = x_ + x;
@@ -28,7 +35,7 @@ public abstract class Postition {
         System.out.println(x +"|" +y);
     }
 
-    public void setppos(Postition p){
+    public void setppos(Vektor p){
         this.x = p.x;
         this.y = p.y;
     }
@@ -59,6 +66,8 @@ public abstract class Postition {
 
     }
 
+    // Setter
+
     public void setX(double x) {
         this.x = x;
     }
@@ -67,7 +76,29 @@ public abstract class Postition {
         this.y = y;
     }
 
-    public String toString(){
-        return x+","+y;
+    public void setpos (double x_ , double y_){
+        x= x_;
+        y= y_;
     }
+
+    // Getter
+
+    public double getH() {
+        return h;
+    }
+
+    public double getW() {
+        return w;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+
+
 }

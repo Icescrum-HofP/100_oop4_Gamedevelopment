@@ -1,12 +1,11 @@
 package entities;
 
-import entities.Player;
 import world.Pos;
-import world.Postition;
+import world.Colide;
 
 import java.awt.*;
 
-public class Bullet extends Postition {
+public class Bullet extends Colide {
 
     private double lenghttarget;
     private double xdiv;
@@ -15,7 +14,7 @@ public class Bullet extends Postition {
     private double defauldspeed = 2;
 
     public Bullet(Player player, Pos postition) {
-        super((player.getX()+ player.getW()/2), (player.getY() + player.getH()/2));
+        super((player.getX()+ player.getW_()/2), (player.getY() + player.getH_()/2),10.0,10.0);
         getlenght(player, postition);
     }
 

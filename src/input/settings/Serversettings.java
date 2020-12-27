@@ -20,6 +20,7 @@ public class Serversettings extends Fileinput {
     private void process(){
 
         for(String s : inputlist){
+
             if(s.contains("ip:")) {
                 ip = s.substring(3);
             }
@@ -32,7 +33,6 @@ public class Serversettings extends Fileinput {
     }
 
     // Getter
-
 
     public String getIp() {
         return ip;

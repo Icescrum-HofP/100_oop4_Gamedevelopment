@@ -10,6 +10,8 @@ public class Enenmy extends Player {
     public Enenmy() {
         super(name, nameid);
     }
+
+
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;

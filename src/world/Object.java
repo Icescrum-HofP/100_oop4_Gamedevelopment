@@ -1,10 +1,10 @@
-package world.input;
+package world;
 
-import world.Postition;
+import world.Vektor;
 
 import java.awt.*;
 
-public class Object extends Postition {
+public class Object extends Vektor {
 
     public Object(){
         super(11.1,11.1);

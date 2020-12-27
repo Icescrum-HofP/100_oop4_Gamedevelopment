@@ -1,9 +1,9 @@
 package game;
 
 import entities.Bullet;
+import entities.Enenmy;
 import entities.Player;
 import world.Pos;
-import world.Postition;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +21,7 @@ public class GamePanel extends JPanel {
     private boolean left;
     //------Entities------
     private Player player;
-    private ArrayList<Player> ennemy;
+    private ArrayList<Enenmy> ennemy;
     private ArrayList<Bullet> bullets;
 
     public GamePanel(int h, int w) {
@@ -35,7 +35,7 @@ public class GamePanel extends JPanel {
         frame.pack();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
-        ennemy = new ArrayList<Player>();
+        ennemy = new ArrayList<Enenmy>();
         bullets = new ArrayList<Bullet>();
         bulletcheck();
         Timer fpsHelper = new Timer(1000, fpsTimer);
@@ -62,7 +62,7 @@ public class GamePanel extends JPanel {
         player.move(up, down, right, left, speed);
     }
 
-    public void enemyupdate(ArrayList<Player> in) {
+    public void enemyupdate(ArrayList<Enenmy> in) {
         ennemy = in;
     }
 
