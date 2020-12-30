@@ -9,7 +9,6 @@ public class Colide extends Vektor {
         super(x_,y_,h_,w_);
     }
 
-
     // ABBA Colliede
 
     public boolean check(Vektor ob) {

@@ -79,16 +79,17 @@ public class Client {
                     String s = null;
                     while ((s = reader.readLine()) != null) {
                         String posall[] = s.split(",");
-                        System.out.println(s);
+                       // System.out.println(s);
                         if (posall.length >= 3) {
                             if (Integer.parseInt(posall[0]) != enemypos.size() && enemypos.size() < Integer.parseInt(posall[0])) {
                                 for (int i = enemypos.size(); i < Integer.parseInt(posall[0]); i++) {
-                                    enemypos.add(new Enenmy());
+                                    Enenmy neu = new Enenmy();
+                                    enemypos.add(neu);
                                 }
                             }
                             for (int i = 0; i < enemypos.size(); i++) {
-                                System.out.println(posall[(1 * (i + 1))]);
-                                System.out.println(posall[2 * (i + 1)]);
+                             //   System.out.println(posall[(1 * (i + 1))]);
+                                // System.out.println(posall[2 * (i + 1)]);
                                 enemypos.get(i).setpos(Double.parseDouble(posall[(1 * (i + 1))]), Double.parseDouble(posall[2 * (i + 1)]));
                             }
                         }

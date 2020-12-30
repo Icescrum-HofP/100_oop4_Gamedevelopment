@@ -14,7 +14,7 @@ public class Bullet extends Colide {
     private double defauldspeed = 2;
 
     public Bullet(Player player, Pos postition) {
-        super((player.getX()+ player.getW_()/2), (player.getY() + player.getH_()/2),10.0,10.0);
+        super((player.getX()+ player.getW()/2), (player.getY() + player.getH()/2),10.0,10.0);
         getlenght(player, postition);
     }
 

@@ -21,10 +21,9 @@ public class Settings extends Fileinput {
     }
 
     private void process(){
-        System.out.println("hier");
+
         for(String s : inputlist){
-            System.out.println(s);
-            System.out.println("hier2");
+
             if(s.contains("ip:")) {
                 ip = s.substring(3);
                 System.out.println(ip);

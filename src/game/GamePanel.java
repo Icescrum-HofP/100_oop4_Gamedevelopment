@@ -72,20 +72,17 @@ public class GamePanel extends JPanel {
         frames++;
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-
-        player.paintComponent(g);
-
-        for (int i = 0; i < ennemy.size(); i++) {
-            ennemy.get(i).paintComponent(g);
-        }
-
-
         for (int i = 0; i < bullets.size(); i++) {
-            bullets.get(i).paintComponent(g);
+            bullets.get(i).paintComponent(g2);
         }
 
         g2.setColor(Color.red);
         g2.drawString("FPS: " + Long.toString(fps), 20, 10);
+
+        for (int i = 0; i < ennemy.size(); i++) {
+            ennemy.get(i).paintComponent(g2);
+        }
+        player.paintComponent(g2);
     }
 
 

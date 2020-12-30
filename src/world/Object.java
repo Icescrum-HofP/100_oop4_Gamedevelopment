@@ -15,8 +15,4 @@ public class Object extends Vektor {
         g2.setColor(Color.CYAN);
         g2.drawRect((int)getX(),(int)getY(),100,100);
     }
-
-
-
-
 }
