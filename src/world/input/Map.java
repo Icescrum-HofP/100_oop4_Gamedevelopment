@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
-
+/*
 public class Map {
 
     private static final String source = "src\\assets\\map-xml\\";
@@ -261,4 +261,4 @@ public class Map {
     }
 
 
-}
+}*/

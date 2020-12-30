@@ -1,14 +1,17 @@
 package entities;
 
+import input.settings.Settings;
+
 import java.awt.*;
 
 public class Enenmy extends Player {
 
-    private static int nameid =1 ;
+    private static Settings settings = new Settings("src\\pics\\Settings") ;
+    private static int nameid = 1;
     private static String name = "ENEMY " + nameid;
 
     public Enenmy() {
-        super(name, nameid);
+        super(name,settings);
     }
 
 

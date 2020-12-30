@@ -3,7 +3,7 @@ package server;
 import entities.Enenmy;
 import game.GamePanel;
 import entities.Player;
-import input.settings.Serversettings;
+import input.settings.Settings;
 
 import java.io.*;
 import java.net.Socket;
@@ -12,18 +12,19 @@ import java.util.ArrayList;
 public class Client {
 
     private GamePanel panel;
-    private Player player = new Player("Player", 12);
+    private Player player;
     private ArrayList<Enenmy> enemypos;
     private Socket client;
     private int packages;
-    private Serversettings settings;
+    private Settings settings;
     private double speed;
     private InputStream in;
     private OutputStream out;
 
     public Client(int h, int w) {
         try {
-            settings = new Serversettings("test");
+            settings = new Settings("src\\pics\\Settings");
+            player =new Player("Icescrum",settings);
             client = new Socket(settings.getIp(), settings.getPort());;
             panel = new GamePanel(h, w);
             panel.addPlayer(player);
@@ -31,7 +32,7 @@ public class Client {
             panel.addPlayer(player);
             enemypos = new ArrayList<Enenmy>();
             packages = 1;
-            speed = 2.3;
+            speed = settings.getPlayerspeed();
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("fehler");

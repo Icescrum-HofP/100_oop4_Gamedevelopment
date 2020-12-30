@@ -8,6 +8,10 @@ import java.util.ArrayList;
 
 public class MapReader {
 
+    // ------------------------------------------------------------
+    // Old
+    // ------------------------------------------------------------
+
     private BufferedReader read;
     private int mapid;
     private int map[][];

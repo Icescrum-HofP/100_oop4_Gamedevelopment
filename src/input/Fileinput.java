@@ -10,7 +10,6 @@ public class Fileinput {
 
     private BufferedReader read;
     private String filepath;
-    private String output;
     private ArrayList<String>  list;
 
     public Fileinput(String path){
@@ -27,22 +26,17 @@ public class Fileinput {
             read = new BufferedReader (new FileReader( new File(filepath)));
             String s;
         while ((s = read.readLine())!=null)  {
-            in += s +"\n";
+           list.add(s);
         }
         }catch (IOException e){
             e.printStackTrace();
         }
-      output = in;
     }
 
     // Getter
 
     public String getFilepath() {
         return filepath;
-    }
-
-    public String getOutput() {
-        return output;
     }
 
     public ArrayList<String> getList() {

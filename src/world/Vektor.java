@@ -81,6 +81,11 @@ public abstract class Vektor {
         y= y_;
     }
 
+    public void setHW (double h_,double w_){
+        h = h_;
+        w = w_;
+    }
+
     // Getter
 
     public double getH() {

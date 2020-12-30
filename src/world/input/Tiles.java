@@ -11,23 +11,29 @@ public class Tiles {
     private Image[][] tieles;
     private int x;
     private int y;
-    private int pixel;
+    private int high;
+    private int with;
+    private int xoffset;
+    private int yoffset;
 
-    public Tiles(String name , int pix)  {
-        pixel = pix;
+    public Tiles(String path_ , int high_, int with_,int xoffset_,int yoffset_)  {
+        high=high_;
+        with = with_;
+        xoffset = xoffset_;
+        yoffset = yoffset_;
         try {
-            String way = "src\\tilese\\" + name + ".png";
+            String path = path_;
 
-            BufferedImage image = ImageIO.read(new File(way));
+            BufferedImage image = ImageIO.read(new File(path));
 
-            this.x= image.getHeight(null)/pix;
-            this.y = image.getWidth(null)/pix;
+            this.x= image.getHeight(null)/high;
+            this.y = image.getWidth(null)/with;
 
             tieles = new Image[x][y];
 
             for(int i=0; i < tieles.length ;i++){
                 for(int j=0; j < tieles[i].length ;j++){
-                    RenderedImage imgr = image.getSubimage((j*pix),(i*pix),pix,pix);
+                    RenderedImage imgr = image.getSubimage((j*(high+yoffset)),(i*(with+xoffset)),with,high);
                     tieles[i][j]=(Image)imgr;
                 }
             }
@@ -36,9 +42,6 @@ public class Tiles {
 
     }
 
-    public int getPixel() {
-        return pixel;
-    }
 
     public Image getTieles(int inx, int iny) {
         return tieles[inx][iny] ;

@@ -8,8 +8,6 @@ import java.util.Scanner;
 
 public class Game {
 
-
-
     public Game(int h, int w) {
 
         System.out.println(" client und server");
@@ -24,7 +22,6 @@ public class Game {
         if(input.equals("server")){
             startserver();
         }
-
 
     }
 
