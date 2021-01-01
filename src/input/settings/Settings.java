@@ -6,14 +6,17 @@ import java.util.ArrayList;
 
 public class Settings extends Fileinput {
 
+    private static String path = "src\\pics\\Settings";
     private String ip;
     private int port;
     private String avatarpath;
     private String[] avatarparameters;
     private ArrayList <String> inputlist;
     private double playerspeed;
+    private String spritesheedpath;
+    private String[] spritesheedparameters;
 
-    public Settings(String path) {
+    public Settings() {
         super(path);
         inputlist = new ArrayList<String>();
         inputlist = getList();
@@ -26,28 +29,33 @@ public class Settings extends Fileinput {
 
             if(s.contains("ip:")) {
                 ip = s.substring(3);
-                System.out.println(ip);
             }
 
             if(s.contains("port:")){
                 port = Integer.parseInt(s.substring(5));
-                System.out.println(port);
             }
 
             if(s.contains("avatar:")){
                 avatarpath = s.substring(7);
-                System.out.println(avatarpath);
             }
 
             if(s.contains("avatarparameters:")){
                 String m= s.substring(17);
                 avatarparameters = m.split(",");
-                System.out.println(m);
             }
 
             if(s.contains("playerspeed:")){
                 playerspeed = Double.parseDouble(s.substring(12));
 
+            }
+
+            if(s.contains("spritesheed:")){
+                spritesheedpath = s.substring(12);
+            }
+
+            if(s.contains("spritesheedparameters:")){
+                String m= s.substring(21);
+                spritesheedparameters = m.split(",");
             }
 
         }
@@ -73,5 +81,13 @@ public class Settings extends Fileinput {
 
     public String[] getAvatarparameters() {
         return avatarparameters;
+    }
+
+    public String getSpritesheedpath() {
+        return spritesheedpath;
+    }
+
+    public String[] getSpritesheedparameters() {
+        return spritesheedparameters;
     }
 }

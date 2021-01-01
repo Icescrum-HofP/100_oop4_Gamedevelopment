@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class Enenmy extends Player {
 
-    private static Settings settings = new Settings("src\\pics\\Settings") ;
+    private static Settings settings = new Settings() ;
     private static int nameid = 1;
     private static String name = "ENEMY " + nameid;
 

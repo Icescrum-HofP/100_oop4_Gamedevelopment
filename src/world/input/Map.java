@@ -1,11 +1,16 @@
-package world.input;
+/*package world.input;
 
+import game.GamePanel;
+import input.settings.Maplist;
+import input.settings.Settings;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import world.Colide;
 import world.Object;
 
+import javax.swing.text.Position;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.awt.*;
@@ -14,24 +19,24 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
-/*
+
 public class Map {
 
-    private static final String source = "src\\assets\\map-xml\\";
+   // private static final String source = "src\\assets\\map-xml\\";
+    private Maplist maplist;
     private int width;
     private int height;
     private int layers;
     private int[][][] contents;
 
-    private Game game;
-    private Spritesheet spritesheet;
-    private Tile[][][] tiles;
-    private GameScaler gameScaler;
+    private GamePanel game;
+    private Tiles spritesheet;
+    private Tiles[][][] tiles;
+   // private GameScaler gameScaler;
     private ArrayList<Object> mapCollisions;
 
-    public Map(Game game) {
-        this.game = game;
-        mapCollisions = new ArrayList<Hitbox>();
+    public Map(GamePanel game) {
+
     }
 
     // ------------------------------------------------------------
@@ -67,7 +72,7 @@ public class Map {
             this.height = Integer.parseInt(((Element) whNode).getAttribute("height"));
 
             contents = new int[layers][height][width];
-            tiles = new Tile[layers][height][width];
+            tiles = new Tiles[layers][height][width];
 
             for (int i = 0; i < layers; i++) {
                 Node data = dataList.item(i);
@@ -86,7 +91,7 @@ public class Map {
                 }
             }
 
-            this.gameScaler = new GameScaler(new Size(width, height));
+        //    this.gameScaler = new GameScaler(new Size(width, height));
             createTileMap(mapImg);
             Element e = (Element) objList.item(0);
             System.out.println(e.getAttribute("id"));
@@ -95,11 +100,11 @@ public class Map {
     }
 
     //--------------------------------------------------------------
-    //neu machne
+    //neu machnen
     //--------------------------------------------------------------
     public void createTileMap(String mapImg) {
-        spritesheet = new Spritesheet(mapImg);
-        BufferedImage[][] sheet = spritesheet.getParts();
+        spritesheet = new Tiles(mapImg,2,2,2,2);
+        BufferedImage[][] sheet = spritesheet.getTilearray();
 
         for (int i = 0; i < layers; i++) {
             for (int j = 0; j < height; j++) {
@@ -248,7 +253,7 @@ public class Map {
         System.out.println(ret);
     }
 
-    public void DisplayHitboxes() {
+  /*  public void DisplayHitboxes() {
         String ret = "";
 
         for (Hitbox iv : mapCollisions) {

@@ -23,7 +23,7 @@ public class Client {
 
     public Client(int h, int w) {
         try {
-            settings = new Settings("src\\pics\\Settings");
+            settings = new Settings();
             player =new Player("Icescrum",settings);
             client = new Socket(settings.getIp(), settings.getPort());;
             panel = new GamePanel(h, w);

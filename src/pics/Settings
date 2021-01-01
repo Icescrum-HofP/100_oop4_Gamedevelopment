@@ -3,3 +3,5 @@ port:5556
 avatar:src\\pics\\Tankblue.png
 avatarparameters:65,60,13,0
 playerspeed:2.3
+spritesheed:src\\pics\\spritesheed\\mc.png
+spritesheedparameters:64,64,0,0
