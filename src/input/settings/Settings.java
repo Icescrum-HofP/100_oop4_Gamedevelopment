@@ -54,7 +54,7 @@ public class Settings extends Fileinput {
             }
 
             if(s.contains("spritesheedparameters:")){
-                String m= s.substring(21);
+                String m= s.substring(22);
                 spritesheedparameters = m.split(",");
             }
 

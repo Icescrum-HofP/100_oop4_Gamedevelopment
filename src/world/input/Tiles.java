@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Tiles {
+
     private BufferedImage[][] tieles;
     private int x;
     private int y;
@@ -28,7 +29,7 @@ public class Tiles {
 
             this.x= image.getHeight(null)/high;
             this.y = image.getWidth(null)/with;
-
+            System.out.println(x + "|"+ y);
             tieles = new BufferedImage[x][y];
 
             for(int i=0; i < tieles.length ;i++){
@@ -39,9 +40,7 @@ public class Tiles {
             }
         }catch( IOException e){
         }
-
     }
-
 
     public BufferedImage getTieles(int inx, int iny) {
         return tieles[inx][iny] ;
@@ -49,11 +48,36 @@ public class Tiles {
 
     public BufferedImage[][] getTilearray(){return tieles;};
 
-
     public void paint(Graphics g){
         Graphics2D object = (Graphics2D) g;
         object.drawImage(tieles[0][1],500,500,null);
         object.drawImage(tieles[0][2],400,400,null);
 
+    }
+
+    //getter
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getHigh() {
+        return high;
+    }
+
+    public int getWith() {
+        return with;
+    }
+
+    public int getXoffset() {
+        return xoffset;
+    }
+
+    public int getYoffset() {
+        return yoffset;
     }
 }

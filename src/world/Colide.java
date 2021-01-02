@@ -9,6 +9,10 @@ public class Colide extends Vektor {
         super(x_,y_,h_,w_);
     }
 
+    public Colide(double x_, double y_) {
+        super(x_, y_);
+    }
+
     // ABBA Colliede
 
     public boolean check(Vektor ob) {
@@ -16,7 +20,6 @@ public class Colide extends Vektor {
         if(getX() < ob.getX() + ob.getW() && getX() +getW() > ob.getX() && getY() < ob.getY() + ob.getH() && getY() + getH() > ob.getY()){
             status = true;
         }
-
         return status;
     }
 }

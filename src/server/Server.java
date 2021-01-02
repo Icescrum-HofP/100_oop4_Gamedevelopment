@@ -62,7 +62,7 @@ public class Server {
                                 for (int j = (listofpos.get(i).size() - 5); j < listofpos.get(i).size(); j++) {
                                     if (listofpos.get(i).get(j).equals(s)) {
                                         check--;
-                                        System.out.println("geh mir nd aufn sack -->" + j);
+                                     //   System.out.println("geh mir nd aufn sack -->" + j);
                                     }
                                 }
                                 if (check == 5) {

@@ -3,7 +3,9 @@ package game;
 import entities.Bullet;
 import entities.Enenmy;
 import entities.Player;
+import input.settings.Maplist;
 import world.Pos;
+import world.input.Mapin;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,6 +25,9 @@ public class GamePanel extends JPanel {
     private Player player;
     private ArrayList<Enenmy> ennemy;
     private ArrayList<Bullet> bullets;
+    //------Map-----------
+    private Mapin map;
+    private Maplist maplist;
 
     public GamePanel(int h, int w) {
         this.setPreferredSize(new Dimension(w, h));
@@ -35,6 +40,8 @@ public class GamePanel extends JPanel {
         frame.pack();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
+        maplist = new Maplist();
+        map = new Mapin(maplist.getMapList()[0]);
         ennemy = new ArrayList<Enenmy>();
         bullets = new ArrayList<Bullet>();
         bulletcheck();
@@ -72,6 +79,9 @@ public class GamePanel extends JPanel {
         frames++;
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+
+        map.drawMap(g2);
+
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paintComponent(g2);
         }
@@ -188,7 +198,6 @@ public class GamePanel extends JPanel {
 
     public void bulletcheck() {
         new Thread(() -> {
-            System.out.println("hier");
             while (true) {
                 for (int i = 0; i < bullets.size(); i++) {
                     if (bullets.get(i).hasfinished()) {

@@ -11,9 +11,15 @@ public class Tile extends Vektor {
         super(x_, y_);
         img = img_;
     }
+    public Tile(double x_, double y_) {
+        super(x_, y_);
+        img = null;
+    }
 
     //Getter
+
     public BufferedImage getImg() {
         return img;
     }
+
 }
