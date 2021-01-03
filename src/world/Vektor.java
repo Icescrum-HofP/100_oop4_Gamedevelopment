@@ -25,7 +25,7 @@ public abstract class Vektor {
     }
 
     // Other
-
+@Override
     public String toString() {
         return x + "," + y;
     }
@@ -38,8 +38,8 @@ public abstract class Vektor {
     }
 
     public void setppos(Vektor p) {
-        this.x = p.x;
-        this.y = p.y;
+        this.x = p.getX();
+        this.y = p.getY();
     }
 
     public void move(boolean u, boolean d, boolean r, boolean l, double speed) {

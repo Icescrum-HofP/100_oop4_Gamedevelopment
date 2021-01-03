@@ -11,11 +11,11 @@ public class Enenmy extends Player {
     private static String name = "ENEMY " + nameid;
 
     public Enenmy() {
-        super(name,settings);
+        super(name,settings,nameid);
     }
 
 
-   /* @Override
+    @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.red);
@@ -23,7 +23,7 @@ public class Enenmy extends Player {
         g2.setColor(Color.pink);
         g2.drawString(name, (int) super.getX(), (int) super.getY()-10);
     }
-*/
+
 
 
 }

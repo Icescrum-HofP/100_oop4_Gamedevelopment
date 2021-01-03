@@ -27,7 +27,6 @@ public class Client {
             player =new Player("Icescrum",settings);
             client = new Socket(settings.getIp(), settings.getPort());;
             panel = new GamePanel(h, w);
-            panel.addPlayer(player);
             player.setpos(100.0,100.0);
             panel.addPlayer(player);
             enemypos = new ArrayList<Enenmy>();
@@ -105,6 +104,7 @@ public class Client {
     private void update() {
         panel.playerupdate(speed);
         panel.enemyupdate(enemypos);
+        panel.checkcollide();
         panel.repaint();
     }
 }

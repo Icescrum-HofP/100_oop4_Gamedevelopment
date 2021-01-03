@@ -12,6 +12,7 @@ public class Bullet extends Colide {
     private double ydiv;
     private int count;
     private double defauldspeed = 2;
+    private Player player;
 
     public Bullet(Player player, Pos postition) {
         super((player.getX()+ player.getW()/2), (player.getY() + player.getH()/2),10.0,10.0);
@@ -40,6 +41,13 @@ public class Bullet extends Colide {
         g2.setColor(Color.GREEN);
         g2.drawRect((int) super.getX(), (int) super.getY(), 10, 10);
     }
+
+    public boolean check(Player p){
+        if(p.getId() != player.getId()){
+            return super.check(p);
+        }
+        return false;
+    };
 
     public boolean hasfinished (){
         if(count >= 100){

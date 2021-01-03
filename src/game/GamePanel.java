@@ -4,6 +4,7 @@ import entities.Bullet;
 import entities.Enenmy;
 import entities.Player;
 import input.settings.Maplist;
+import world.HitBox;
 import world.Pos;
 import world.input.Mapin;
 
@@ -25,6 +26,7 @@ public class GamePanel extends JPanel {
     private Player player;
     private ArrayList<Enenmy> ennemy;
     private ArrayList<Bullet> bullets;
+    private ArrayList<HitBox> objects;
     //------Map-----------
     private Mapin map;
     private Maplist maplist;
@@ -44,6 +46,7 @@ public class GamePanel extends JPanel {
         map = new Mapin(maplist.getMapList()[0]);
         ennemy = new ArrayList<Enenmy>();
         bullets = new ArrayList<Bullet>();
+        objects = map.getObjects();
         bulletcheck();
         Timer fpsHelper = new Timer(1000, fpsTimer);
         fpsHelper.restart();
@@ -73,6 +76,25 @@ public class GamePanel extends JPanel {
         ennemy = in;
     }
 
+    public void checkcollide(){
+
+      //  System.out.println(objects.size());
+
+        for(Bullet s : bullets){
+            if(s.check(player)){
+                player.gethit();
+            }
+        }
+
+        for(HitBox s : objects){
+            if(s.check(player)){
+                player.setppos(player.getPositionbevor());
+            }
+        }
+
+        player.setPositionbevor(player.getPos());
+    }
+
     //Paint---------------------------------------------------------------------
     @Override
     public void paintComponent(Graphics g) {
@@ -82,13 +104,18 @@ public class GamePanel extends JPanel {
 
         map.drawMap(g2);
 
-        for (int i = 0; i < bullets.size(); i++) {
-            bullets.get(i).paintComponent(g2);
+        for(HitBox s: objects){
+            g2.drawRect((int)s.getX(),(int)s.getY(),(int)s.getW(),(int)s.getH());
         }
 
-        for (int i = 0; i < ennemy.size(); i++) {
-            ennemy.get(i).paintComponent(g2);
+        for (Bullet s: bullets) {
+            s.paintComponent(g2);
         }
+
+        for (Enenmy s: ennemy) {
+           s.paintComponent(g2);
+        }
+
         player.paintComponent(g2);
 
         g2.setColor(Color.red);

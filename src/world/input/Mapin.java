@@ -6,7 +6,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import world.Box;
+import world.HitBox;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -30,18 +30,20 @@ public class Mapin {
     private Tiles spritesheed;
     private Settings settings;
     private NodeList objList;
-    private ArrayList<Box> objects;
+    private ArrayList<HitBox> objects;
+    private Document doc;
 
     public Mapin(String path) {
         xmlpath = path;
         xmlFlie = new File(xmlpath);
         settings = new Settings();
         String[] s = settings.getSpritesheedparameters();
-        objects = new ArrayList<Box>();
+        objects = new ArrayList<HitBox>();
         System.out.println(settings.getSpritesheedpath());
         spritesheed = new Tiles(settings.getSpritesheedpath(), Integer.parseInt(s[0]), Integer.parseInt(s[1]), Integer.parseInt(s[2]), Integer.parseInt(s[3]));
         xmlinput();
         tielmap();
+        collisionlayer();
     }
 
     private void xmlinput() {
@@ -54,7 +56,7 @@ public class Mapin {
 
             DocumentBuilderFactory docBF = DocumentBuilderFactory.newInstance();
             DocumentBuilder docB = docBF.newDocumentBuilder();
-            Document doc = docB.parse(xmlFlie);
+            doc = docB.parse(xmlFlie);
 
             NodeList layerList = doc.getElementsByTagName("layer");
             NodeList dataList = doc.getElementsByTagName("data");
@@ -94,8 +96,8 @@ public class Mapin {
     // map in tieles umwandeln
     private void tielmap() {
 
-        System.out.println(spritesheed.getX());
-        ;
+       // System.out.println(spritesheed.getX());
+
         for (int i = 0; i < layers; i++) {
             for (int j = 0; j < height; j++) {
                 for (int k = 0; k < width; k++) {
@@ -127,18 +129,26 @@ public class Mapin {
 
     private void collisionlayer() {
 
+        //Element objectgroup = (Element) doc.getElementsByTagName("objectgroup");
+       // System.out.println("zeile 133 "+objList.getLength());
         for (int i = 0; i < objList.getLength(); i++) {
-            Element parent = (Element) objList.item(i).getParentNode();
-            if (parent.getAttribute("name").equals("collision")) {
-                Element collision = (Element) objList.item(i);
-                objects.add(new Box(Double.parseDouble(collision.getAttribute("x")),Double.parseDouble(collision.getAttribute("y")),Double.parseDouble(collision.getAttribute("height")),Double.parseDouble(collision.getAttribute("width"))));
+            NodeList objects = ((Element)objList.item(i)).getElementsByTagName("object");
+           // System.out.println("zeile 136 "+objects.getLength());
+
+            for(int j = 0; j< objects.getLength();j++){
+            Element object = (Element)objects.item(j);
+            HitBox test = new HitBox(Double.parseDouble(object.getAttribute("x")),Double.parseDouble(object.getAttribute("y")),Double.parseDouble(object.getAttribute("height")),Double.parseDouble(object.getAttribute("width")));
+                this.objects.add(new HitBox(Double.parseDouble(object.getAttribute("x")),Double.parseDouble(object.getAttribute("y")),Double.parseDouble(object.getAttribute("height")),Double.parseDouble(object.getAttribute("width"))));
+         //       System.out.println("zeile 142 "+ test.toString());
             }
         }
+       // System.out.println("zeile 145 "+objects.size());
     }
+
 
     // Getter
-
-    public ArrayList<Box> getObjects() {
+    public ArrayList<HitBox> getObjects() {
         return objects;
     }
+
 }
