@@ -1,7 +1,7 @@
 package game;
 
-import server.Client;
-import server.Server;
+import Serverold.Client;
+import Serverold.Server;
 
 import java.util.Scanner;
 

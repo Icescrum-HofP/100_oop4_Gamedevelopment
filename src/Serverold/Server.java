@@ -1,4 +1,4 @@
-package server;
+package Serverold;
 
 import javax.naming.ldap.SortKey;
 import java.io.*;
@@ -37,7 +37,7 @@ public class Server {
             if (listofpos.get(0).size() > 1) {
                 for (int i = 0; i < listofpos.size(); i++) {
                     if (listofpos.get(i).size() > 2) {
-                       // System.out.println(listofpos.get(i).toString());
+                        // System.out.println(listofpos.get(i).toString());
                     }
                 }
             }
@@ -56,20 +56,20 @@ public class Server {
                         while ((s = reader.readLine()) != null) {
                             if (listofpos.get(i).size() < 10) {
                                 listofpos.get(i).add(s);
-                                //    System.out.println("check ---> " + i);
+                                //System.out.println("check ---> " + i);
                             } else {
                                 int check = 5;
                                 for (int j = (listofpos.get(i).size() - 5); j < listofpos.get(i).size(); j++) {
                                     if (listofpos.get(i).get(j).equals(s)) {
                                         check--;
-                                     //   System.out.println("geh mir nd aufn sack -->" + j);
+                                        //System.out.println("geh mir nd aufn sack -->" + j);
                                     }
                                 }
                                 if (check == 5) {
                                     listofpos.get(i).add(s);
-                                    System.out.println("wurde geaddedt ");
-                                    //     System.out.println(check + "--->" + i);
-                                    //  System.out.println(s + " von der nr " + i);
+                                    //System.out.println("wurde geaddedt ");
+                                    //System.out.println(check + "--->" + i);
+                                    //System.out.println(s + " von der nr " + i);
                                 }
                             }
                             break;
@@ -101,7 +101,7 @@ public class Server {
                                     //System.out.println(listofpos.get(j).size() + " ich bin im if");
                                     output += listofpos.get(j).get(0) + ",";
                                     listofpos.get(j).remove(0);
-                                       System.out.println(output);
+                                    System.out.println(output);
                                 } else {
                                     // System.out.println("drausen");
                                 }

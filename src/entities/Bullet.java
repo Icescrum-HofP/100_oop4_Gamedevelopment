@@ -10,16 +10,24 @@ public class Bullet extends Colide {
     private double lenghttarget;
     private double xdiv;
     private double ydiv;
+    private static double h = 10.0;
+    private static double w = 10.0;
     private int count;
     private double defauldspeed = 2;
     private Player player;
 
-    public Bullet(Player player, Pos postition) {
-        super((player.getX()+ player.getW()/2), (player.getY() + player.getH()/2),10.0,10.0);
-        getlenght(player, postition);
+    public Bullet(Player player_, Pos postition) {
+        super((player_.getX()+ player_.getW()/2), (player_.getY() + player_.getH()/2),h,w);
+        player = player_;
+        getlenght(postition);
+
     }
 
-    private void getlenght(Player player, Pos postition){
+    public Bullet(Pos pos){
+        super(pos.getX(), pos.getY(),h,w);
+    }
+
+    private void getlenght(Pos postition){
         xdiv= (player.getX() - postition.getX());
         ydiv = (player.getY() - postition.getY());
         lenghttarget = Math.sqrt(((ydiv*ydiv) + (xdiv*xdiv)));
@@ -35,7 +43,6 @@ public class Bullet extends Colide {
 
     public void paintComponent(Graphics g) {
         count ++;
-        System.out.println(count);
         move();
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.GREEN);

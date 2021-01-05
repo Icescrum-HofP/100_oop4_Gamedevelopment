@@ -32,6 +32,11 @@ public class GamePanel extends JPanel {
     private Maplist maplist;
 
     public GamePanel(int h, int w) {
+        maplist = new Maplist();
+        map = new Mapin(maplist.getMapList()[0]);
+        ennemy = new ArrayList<Enenmy>();
+        bullets = new ArrayList<Bullet>();
+        objects = map.getObjects();
         this.setPreferredSize(new Dimension(w, h));
         JFrame frame = new JFrame("First Game");
         frame.setLocation(100, 100);
@@ -42,11 +47,6 @@ public class GamePanel extends JPanel {
         frame.pack();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
-        maplist = new Maplist();
-        map = new Mapin(maplist.getMapList()[0]);
-        ennemy = new ArrayList<Enenmy>();
-        bullets = new ArrayList<Bullet>();
-        objects = map.getObjects();
         bulletcheck();
         Timer fpsHelper = new Timer(1000, fpsTimer);
         fpsHelper.restart();
@@ -76,23 +76,35 @@ public class GamePanel extends JPanel {
         ennemy = in;
     }
 
-    public void checkcollide(){
+    public void checkcollide() {
 
-      //  System.out.println(objects.size());
+        //  System.out.println(objects.size());
 
-        for(Bullet s : bullets){
-            if(s.check(player)){
+        for (Bullet s : bullets) {
+            if (s.check(player)) {
                 player.gethit();
             }
         }
 
-        for(HitBox s : objects){
-            if(s.check(player)){
+        for (HitBox y : objects) {
+                for (int i = 0; i<bullets.size();i++){
+                    if (bullets.get(i).check(y)) {
+                        bullets.remove(i);
+                    }
+                }
+            }
+
+        for (HitBox s : objects) {
+            if (s.check(player)) {
                 player.setppos(player.getPositionbevor());
             }
         }
 
         player.setPositionbevor(player.getPos());
+    }
+
+    public ArrayList<Bullet> getBullets() {
+        return bullets;
     }
 
     //Paint---------------------------------------------------------------------
@@ -104,16 +116,16 @@ public class GamePanel extends JPanel {
 
         map.drawMap(g2);
 
-        for(HitBox s: objects){
-            g2.drawRect((int)s.getX(),(int)s.getY(),(int)s.getW(),(int)s.getH());
+        for (HitBox s : objects) {
+            g2.drawRect((int) s.getX(), (int) s.getY(), (int) s.getW(), (int) s.getH());
         }
 
-        for (Bullet s: bullets) {
+        for (Bullet s : bullets) {
             s.paintComponent(g2);
         }
 
-        for (Enenmy s: ennemy) {
-           s.paintComponent(g2);
+        for (Enenmy s : ennemy) {
+            s.paintComponent(g2);
         }
 
         player.paintComponent(g2);

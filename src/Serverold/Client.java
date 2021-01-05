@@ -1,5 +1,6 @@
-package server;
+package Serverold;
 
+import entities.Bullet;
 import entities.Enenmy;
 import game.GamePanel;
 import entities.Player;
@@ -14,6 +15,7 @@ public class Client {
     private GamePanel panel;
     private Player player;
     private ArrayList<Enenmy> enemypos;
+    private ArrayList<Bullet> enemybullets;
     private Socket client;
     private int packages;
     private Settings settings;
@@ -68,7 +70,7 @@ public class Client {
             Thread.yield();
         }).start();
     }
-
+//number of enemies;name,pos,bullets;pos,bullest;
     public void recive() {
         new Thread(() -> {
             try {

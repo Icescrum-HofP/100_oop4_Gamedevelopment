@@ -143,4 +143,9 @@ public class Player extends Colide {
     public int getId() {
         return id;
     }
+
+    public String toStrings(){
+        return name+";"+getId()+";"+getMovedirection()+";"+getX()+","+getY();
+    }
+
 }
