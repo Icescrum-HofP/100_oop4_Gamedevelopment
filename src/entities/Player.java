@@ -19,6 +19,7 @@ public class Player extends Colide {
     private Settings settings;
     private String[] parameters;
     private String direction;
+    private String directionbevor = "down";
     private Pos positionbevor;
     private int damage;
     private int angle;
@@ -145,7 +146,14 @@ public class Player extends Colide {
     }
 
     public String toStrings(){
-        return name+";"+getId()+";"+getMovedirection()+";"+getX()+","+getY();
+       String direction_ = directionbevor;
+
+        if(!direction.equals("")){
+            direction_ = direction;
+            directionbevor = direction;
+        }
+
+        return name+";"+getId()+";"+direction_+";"+getX()+","+getY();
     }
 
 }

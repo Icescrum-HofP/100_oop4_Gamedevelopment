@@ -2,6 +2,7 @@ package server.packet;
 
 import entities.Bullet;
 import entities.Player;
+import world.Pos;
 
 import java.util.ArrayList;
 
@@ -31,7 +32,7 @@ public class Packets {
     }
 
     private void process() {
-        processed = msg.split(",");
+        processed = msg.split(";");
     }
 
     private void merger(Player p, ArrayList<Bullet> b){
@@ -46,15 +47,14 @@ public class Packets {
             }
         }
         if(b.size() == 0){
-            merg += null;
+            merg += p.toString();
         }
     }
 
     private void merge(String[] s) {
+        merg += s[0]+";";
+        merg += s[1];
 
-        for (int i = 0; i < s.length; i++) {
-            merg += s[i] + ",";
-        }
     }
 
     public String[] getProcessed() {
@@ -62,13 +62,19 @@ public class Packets {
     }
 
     public String getMerge() {
-        return msg;
+        return merg+"\n";
     }
 
     public static ArrayList<Bullet> bullets(String number,String bullets){
         ArrayList<Bullet> b = new ArrayList<Bullet>();
+        String[] in = bullets.split(",");
+        if(Integer.parseInt(number) == in.length){
+            System.out.println("fehler bullet number zu groß --->" + Integer.parseInt(number));
+        }
+        for(int i = 0;i<in.length;i+= 2){
+            b.add(new Bullet(new Pos(Double.parseDouble(in[i]),Double.parseDouble(in[i+1]))));
 
-
+        }
 
         return b;
     }

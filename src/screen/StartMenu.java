@@ -10,7 +10,7 @@ public class StartMenu extends JPanel {
     JButton server;
 
     public StartMenu (){
-        this.setPreferredSize(new Dimension(400, 300));
+        this.setPreferredSize(new Dimension(400, 800));
         frame = new JFrame("Menu");
         client = new JButton("Client");
         server = new JButton("Server");

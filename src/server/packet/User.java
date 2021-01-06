@@ -9,33 +9,92 @@ import java.util.ArrayList;
 public class User {
 
     private String name;
-    private Pos lastpos =new Pos(0.0,0.0);
+    private Pos lastpos = new Pos(0.0, 0.0);
     private int id;
     private ArrayList<Pos> pos;
     private ArrayList<ArrayList<Bullet>> bullets;
     private Socket socket;
     private boolean go = false;
+    private String direction;
 
-    public User(){
+    public User() {
         pos = new ArrayList<>();
         bullets = new ArrayList<>();
+//        ArrayList<Bullet> b = new ArrayList<Bullet>();
+//        b.add(new Bullet(new Pos(0.0,0.0)));
+//        bullets.add(b);
+        direction = "down";
     }
 
-    public void addnewPos(String pos_){
+    public void addnewPos(String pos_) {
         String[] s = pos_.split(",");
-        pos.add(new Pos(Double.parseDouble(s[0]),Double.parseDouble(s[1])));
+        if (pos.size() > 5) {
+            pos.remove(0);
+        }
+        pos.add(new Pos(Double.parseDouble(s[0]), Double.parseDouble(s[1])));
     }
 
-    public void addBullet(String bullets_){
+    public void addBullet(String bullets_) {
         String[] s = bullets_.split(",");
         ArrayList<Bullet> bulletArrayList = new ArrayList<>();
-        for(int i = 0 ;i<s.length;i++){
-            bulletArrayList.add(new Bullet(new Pos(Double.parseDouble(s[i*2]),Double.parseDouble(s[1+(i*2)]))));
+//        System.out.println(s.length);
+        for (int i = 0; i < s.length; i += 2) {
+            bulletArrayList.add(new Bullet(new Pos(Double.parseDouble(s[i]), Double.parseDouble(s[1 + i]))));
+        }
+        if (bullets.size() > 5) {
+            bullets.remove(0);
         }
         bullets.add(bulletArrayList);
     }
 
+    public void setDirection(String direction_) {
+        direction = direction_;
+    }
+
+    public String next() {
+        String msg = name + ";" + id + ";";
+
+        if(direction != ""){
+            msg+= direction+";";
+        }else {
+            msg += "down;";
+        }
+
+        if (pos.size() == 0) {
+            msg += lastpos.toString();
+        } else {
+            msg += pos.get(0).toString();
+            lastpos = pos.get(0);
+            pos.remove(0);
+        }
+
+
+
+
+        if (bullets.size() > 0) {
+            msg += ";"+bullets.get(0).size()+1+";";
+            msg += lastpos.toString()+",";
+            for (int i = 0; i < bullets.get(0).size(); i++) {
+
+                if (i < bullets.get(0).size() - 1) {
+                    msg += bullets.get(0).get(i).toString() + ",";
+                } else {
+                    msg += bullets.get(0).get(i).toString();
+                }
+            }
+            bullets.remove(0);
+        }else {
+            msg += ";1;"+lastpos.toString();
+        }
+
+
+        return msg;
+    }
+
     //getter && setter
+    public void go() {
+        go = true;
+    }
 
     public boolean isGo() {
         return go;
@@ -43,6 +102,10 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setSocket(Socket socket) {
