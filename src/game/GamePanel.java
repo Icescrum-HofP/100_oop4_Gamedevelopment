@@ -22,6 +22,7 @@ public class GamePanel extends JPanel {
     private boolean down;
     private boolean right;
     private boolean left;
+    private boolean escape;
     //------Entities------
     private Player player;
     private ArrayList<Enenmy> ennemy;
@@ -42,12 +43,12 @@ public class GamePanel extends JPanel {
         frame.setLocation(100, 100);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(this);
+        frame.setResizable(false);
         frame.addMouseListener(mouseListener);
         frame.addKeyListener(e);
         frame.pack();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
-        bulletcheck();
         Timer fpsHelper = new Timer(1000, fpsTimer);
         fpsHelper.restart();
     }
@@ -79,20 +80,35 @@ public class GamePanel extends JPanel {
     public void checkcollide() {
 
         //  System.out.println(objects.size());
+        bulletcheck();
+//        for (Bullet s : bullets) {
+//            if (s.check(player)) {
+//                player.gethit();
+//            }
+//        }
 
-        for (Bullet s : bullets) {
-            if (s.check(player)) {
-                player.gethit();
+        for (Enenmy s : ennemy) {
+            int counter = 0;
+            for (Bullet b : s.getBullets()) {
+                if (counter != 0) {
+                    if (!b.checks(s)) {
+                        if (b.checks(player)) {
+                            player.gethit();
+                        }
+                    }
+                }
+                counter++;
             }
         }
 
+
         for (HitBox y : objects) {
-                for (int i = 0; i<bullets.size();i++){
-                    if (bullets.get(i).check(y)) {
-                        bullets.remove(i);
-                    }
+            for (int i = 0; i < bullets.size(); i++) {
+                if (bullets.get(i).check(y)) {
+                    bullets.remove(i);
                 }
             }
+        }
 
         for (HitBox s : objects) {
             if (s.check(player)) {
@@ -116,15 +132,22 @@ public class GamePanel extends JPanel {
 
         map.drawMap(g2);
 
-        for (HitBox s : objects) {
-            g2.drawRect((int) s.getX(), (int) s.getY(), (int) s.getW(), (int) s.getH());
-        }
+//        for (HitBox s : objects) {
+//            g2.drawRect((int) s.getX(), (int) s.getY(), (int) s.getW(), (int) s.getH());
+//        }
 
         for (Bullet s : bullets) {
             s.paintComponent(g2);
         }
 
         for (Enenmy s : ennemy) {
+            int counter = 0;
+            for (Bullet b : s.getBullets()) {
+                if (counter != 0) {
+                    b.paintComponent(g2);
+                }
+                counter++;
+            }
             s.paintComponent(g2);
         }
 
@@ -163,9 +186,8 @@ public class GamePanel extends JPanel {
             }
 
             if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                System.exit(1);
+                escape = true;
             }
-
         }
 
         @Override
@@ -211,7 +233,7 @@ public class GamePanel extends JPanel {
             Bullet bullet = new Bullet(player, p);
             bullets.add(bullet);
             try {
-                Thread.sleep(50);
+                Thread.sleep(10);
             } catch (InterruptedException interruptedException) {
                 interruptedException.printStackTrace();
             }
@@ -233,20 +255,36 @@ public class GamePanel extends JPanel {
         }
     };
 
-    // Threads--------------------------------------------------------------------------------
+    // functions--------------------------------------------------------------------------------
 
     public void bulletcheck() {
-        new Thread(() -> {
-            while (true) {
-                for (int i = 0; i < bullets.size(); i++) {
-                    if (bullets.get(i).hasfinished()) {
-                        bullets.remove(i);
-                    }
-                }
-                Thread.yield();
+        for (int i = 0; i < bullets.size(); i++) {
+            if (bullets.get(i).hasfinished()) {
+                bullets.remove(i);
             }
-        }).start();
+        }
     }
+
+    public boolean isEscape() {
+        return escape;
+    }
+
+    public boolean isDeath() {
+        return player.isDeath();
+    }
+
+    //    public void bulletout() {
+//        new Thread(() -> {
+//            while (true) {
+//                String msg = "Bullets: -->";
+//                for (int i = 0; i < bullets.size(); i++) {
+//                    msg += bullets.get(i).toString();
+//                }
+//                System.out.println(msg);
+//                Thread.yield();
+//            }
+//        }).start();
+//    }
 
 }
 

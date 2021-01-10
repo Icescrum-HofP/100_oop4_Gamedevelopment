@@ -25,9 +25,9 @@ public abstract class Vektor {
     }
 
     // Other
-@Override
+    @Override
     public String toString() {
-        return x + "," + y;
+        return (int)x + "," +(int) y;
     }
 
 

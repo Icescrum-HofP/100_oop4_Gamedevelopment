@@ -17,8 +17,8 @@ public class Tiles {
     private int xoffset;
     private int yoffset;
 
-    public Tiles(String path_ , int high_, int with_,int xoffset_,int yoffset_)  {
-        high=high_;
+    public Tiles(String path_, int high_, int with_, int xoffset_, int yoffset_) {
+        high = high_;
         with = with_;
         xoffset = xoffset_;
         yoffset = yoffset_;
@@ -27,31 +27,35 @@ public class Tiles {
 
             BufferedImage image = ImageIO.read(new File(path));
 
-            this.x= image.getHeight(null)/high;
-            this.y = image.getWidth(null)/with;
-            System.out.println(x + "|"+ y);
+            this.x = image.getHeight(null) / high;
+            this.y = image.getWidth(null) / with;
+//            System.out.println(x + "|" + y);
             tieles = new BufferedImage[x][y];
 
-            for(int i=0; i < tieles.length ;i++){
-                for(int j=0; j < tieles[i].length ;j++){
-                    RenderedImage imgr = image.getSubimage((j*(high+yoffset)),(i*(with+xoffset)),with,high);
-                    tieles[i][j]=(BufferedImage) imgr;
+            for (int i = 0; i < tieles.length; i++) {
+                for (int j = 0; j < tieles[i].length; j++) {
+                    RenderedImage imgr = image.getSubimage((j * (high + yoffset)), (i * (with + xoffset)), with, high);
+                    tieles[i][j] = (BufferedImage) imgr;
                 }
             }
-        }catch( IOException e){
+        } catch (IOException e) {
         }
     }
 
     public BufferedImage getTieles(int inx, int iny) {
-        return tieles[inx][iny] ;
+        return tieles[inx][iny];
     }
 
-    public BufferedImage[][] getTilearray(){return tieles;};
+    public BufferedImage[][] getTilearray() {
+        return tieles;
+    }
 
-    public void paint(Graphics g){
+    ;
+
+    public void paint(Graphics g) {
         Graphics2D object = (Graphics2D) g;
-        object.drawImage(tieles[0][1],500,500,null);
-        object.drawImage(tieles[0][2],400,400,null);
+        object.drawImage(tieles[0][1], 500, 500, null);
+        object.drawImage(tieles[0][2], 400, 400, null);
 
     }
 

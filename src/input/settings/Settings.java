@@ -11,7 +11,7 @@ public class Settings extends Fileinput {
     private int port;
     private String avatarpath;
     private String[] avatarparameters;
-    private ArrayList <String> inputlist;
+    private ArrayList<String> inputlist;
     private double playerspeed;
     private String spritesheedpath;
     private String[] spritesheedparameters;
@@ -23,38 +23,38 @@ public class Settings extends Fileinput {
         process();
     }
 
-    private void process(){
+    private void process() {
 
-        for(String s : inputlist){
+        for (String s : inputlist) {
 
-            if(s.contains("ip:")) {
+            if (s.contains("ip:")) {
                 ip = s.substring(3);
             }
 
-            if(s.contains("port:")){
+            if (s.contains("port:")) {
                 port = Integer.parseInt(s.substring(5));
             }
 
-            if(s.contains("avatar:")){
+            if (s.contains("avatar:")) {
                 avatarpath = s.substring(7);
             }
 
-            if(s.contains("avatarparameters:")){
-                String m= s.substring(17);
+            if (s.contains("avatarparameters:")) {
+                String m = s.substring(17);
                 avatarparameters = m.split(",");
             }
 
-            if(s.contains("playerspeed:")){
+            if (s.contains("playerspeed:")) {
                 playerspeed = Double.parseDouble(s.substring(12));
 
             }
 
-            if(s.contains("spritesheed:")){
+            if (s.contains("spritesheed:")) {
                 spritesheedpath = s.substring(12);
             }
 
-            if(s.contains("spritesheedparameters:")){
-                String m= s.substring(22);
+            if (s.contains("spritesheedparameters:")) {
+                String m = s.substring(22);
                 spritesheedparameters = m.split(",");
             }
 

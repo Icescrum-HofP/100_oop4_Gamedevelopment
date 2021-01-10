@@ -13,7 +13,7 @@ import java.util.Vector;
 public class Player extends Colide {
 
     private String name;
-    private  int id = 0;
+    private int id = 0;
     private int helth;
     private Tiles avatar;
     private Settings settings;
@@ -24,62 +24,62 @@ public class Player extends Colide {
     private int damage;
     private int angle;
     private boolean life;
+    private boolean player = true;
 
-    public Player(String name_, Settings settings_){
-        super(100.0,100.0,40.0,40.0);
-        settings=settings_;
+    public Player(String name_, Settings settings_) {
+        super(100.0, 100.0, 40.0, 40.0);
+        settings = settings_;
         name = name_;
         setParameters();
     }
 
-    public Player(String name_, Settings settings_,int id_){
-        super(100.0,100.0,40.0,40.0);
+    public Player(String name_, Settings settings_, int id_) {
+        super(100.0, 100.0, 40.0, 40.0);
         id = id_;
-        settings=settings_;
+        player = false;
+        settings = settings_;
         name = name_;
         setParameters();
     }
 
-    private void setParameters (){
-        positionbevor = new Pos(100.0,100.0);
+    private void setParameters() {
+        positionbevor = new Pos(100.0, 100.0);
         helth = 100;
         life = true;
         damage = 10;
-        direction="down";
+        direction = "down";
         parameters = settings.getAvatarparameters();
-        setHW(Double.parseDouble(parameters[0]),Double.parseDouble(parameters[1]));
-        avatar = new Tiles(settings.getAvatarpath(),Integer.parseInt(parameters[0]),Integer.parseInt(parameters[1]),Integer.parseInt(parameters[2]),Integer.parseInt(parameters[3]));
+        setHW(Double.parseDouble(parameters[0]), Double.parseDouble(parameters[1]));
+        avatar = new Tiles(settings.getAvatarpath(), Integer.parseInt(parameters[0]), Integer.parseInt(parameters[1]), Integer.parseInt(parameters[2]), Integer.parseInt(parameters[3]));
     }
 
-
     public void paintComponent(Graphics g) {
-        if(life) {
             Graphics2D g2 = (Graphics2D) g;
             //g2.drawRect((int) super.getX(), (int) super.getY(), (int)h_, (int)w_);
             g2.setColor(Color.green);
-            g2.drawString(name, (int) super.getX(), (int) super.getY() - 10);
+            g2.drawString(name+" "+ helth+"/100", (int) super.getX(), (int) super.getY() - 10);
             drawTank(g2);
+//            System.out.println(direction);
             //g2.drawImage(avatar.getTieles(0,0),(int) super.getX(), (int) super.getY(),null );
-        }
     }
 
     public void drawTank(Graphics2D graphics) {
         Graphics2D graphics2 = (Graphics2D) graphics.create();
         AffineTransform latch = graphics2.getTransform();
         graphics.drawImage(
-                avatar.getTieles(0,0),
+                avatar.getTieles(0, 0),
                 transform(graphics2),
                 null
         );
         graphics.setTransform(latch);
-       // graphics.dispose();
+        // graphics.dispose();
     }
 
     public AffineTransform transform(Graphics2D graphics) {
         AffineTransform transform;
-        transform = AffineTransform.getTranslateInstance((getX()+ getW()/2), (getY() + getH()/2));
+        transform = AffineTransform.getTranslateInstance((getX() + getW() / 2), (getY() + getH() / 2));
         getangle();
-        transform.setToRotation(Math.toRadians(angle),(getX()+ getW()/2),(getY() + getH()/2));
+        transform.setToRotation(Math.toRadians(angle), (getX() + getW() / 2), (getY() + getH() / 2));
         graphics.transform(transform);
 
         transform.translate(getX(), getY());
@@ -88,34 +88,35 @@ public class Player extends Colide {
         return transform;
     }
 
-    private void getangle(){
+    private void getangle() {
 
-        direction=getMovedirection();
-
-        switch(direction){
-            case"up":
-                angle=180;
+        if(player) {
+            direction = getMovedirection();
+        }
+        switch (direction) {
+            case "up":
+                angle = 180;
                 break;
-            case"upright":
-                angle=225;
+            case "upright":
+                angle = 225;
                 break;
-            case"upleft":
-                angle=135;
+            case "upleft":
+                angle = 135;
                 break;
-            case"down":
-                angle=0;
+            case "down":
+                angle = 0;
                 break;
-            case"downleft":
-                angle=45;
+            case "downleft":
+                angle = 45;
                 break;
-            case"downright":
-                angle=315;
+            case "downright":
+                angle = 315;
                 break;
-            case"right":
-                angle=270;
+            case "right":
+                angle = 270;
                 break;
-            case"left":
-                angle=90;
+            case "left":
+                angle = 90;
                 break;
         }
     }
@@ -124,17 +125,19 @@ public class Player extends Colide {
         return positionbevor;
     }
 
-    public Pos getPos(){
-        return new Pos(getX(),getY());
+    public Pos getPos() {
+        return new Pos(getX(), getY());
     }
 
     public void setPositionbevor(Pos positionbevor) {
         this.positionbevor = positionbevor;
     }
 
-    public void gethit(){
-        helth = helth -damage;
-        if(helth <= 0 ){
+    public void setDirection(String in){direction = in;}
+
+    public void gethit() {
+        helth = helth - damage;
+        if (helth <= 0) {
             life = false;
             setX(0.0);
             setY(0.0);
@@ -145,15 +148,22 @@ public class Player extends Colide {
         return id;
     }
 
-    public String toStrings(){
-       String direction_ = directionbevor;
+    public String toStrings() {
+        String direction_ = directionbevor;
 
-        if(!direction.equals("")){
+        if (!direction.equals("")) {
             direction_ = direction;
             directionbevor = direction;
         }
 
-        return name+";"+getId()+";"+direction_+";"+getX()+","+getY();
+        return name + ";" + getId() + ";" + direction_ + ";" +(int) getX() + "," + (int)getY();
     }
 
+    public boolean isDeath(){
+        if(helth < 0){
+            life = false;
+            return true;
+        }
+        return false;
+    }
 }

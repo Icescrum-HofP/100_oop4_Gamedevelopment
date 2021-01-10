@@ -1,6 +1,5 @@
 package server;
 
-import entities.Bullet;
 import entities.Enenmy;
 import entities.Player;
 import game.GamePanel;
@@ -20,12 +19,13 @@ public class Clientnew {
     private ArrayList<Enenmy> enemypos;
     private Socket client;
     private int id;
-    private int packages;
     private Settings settings;
     private double speed;
     private InputStream in;
     private OutputStream out;
     private String name;
+    private boolean play = true;
+    private boolean escape = false;
 
     public Clientnew(int h, int w, boolean online, String name_) {
         settings = new Settings();
@@ -35,49 +35,47 @@ public class Clientnew {
         player.setpos(100.0, 100.0);
         panel.addPlayer(player);
         enemypos = new ArrayList<Enenmy>();
-        packages = 1;
         speed = settings.getPlayerspeed();
 
         if (online) {
             login();
         }
         play();
-
     }
-
 
     private void play() {
         try {
-            while (true) {
-                Thread.sleep(10);
-                panel.playerupdate(speed);
-                panel.enemyupdate(enemypos);
-                panel.checkcollide();
-                panel.repaint();
+            while (play) {
+                escape = panel.isEscape();
+                if(panel.isDeath()){
+                    dead();
+                }
+                if (!escape) {
+                    Thread.sleep(10);
+                    panel.playerupdate(speed);
+                    panel.enemyupdate(enemypos);
+                    panel.checkcollide();
+                    panel.repaint();
+                } else {
+                    logout();
+                }
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-
     }
-
 
     private void login() {
         try {
-
             client = new Socket(settings.getIp(), settings.getPort());
             Packets pack = new Packets("welcome", name, processid(name));
             out = client.getOutputStream();
             PrintWriter print = new PrintWriter(out);
-
-            System.out.println(pack.getMerge());
-
+//            System.out.println(pack.getMerge());
             Thread.sleep(20);
-
             print.write(pack.getMerge());
             print.flush();
-            System.out.println("message send");
+//            System.out.println("message send");
             sendDefauld();
             reviceDefauld();
         } catch (IOException | InterruptedException e) {
@@ -88,12 +86,14 @@ public class Clientnew {
     private void sendDefauld() {
         new Thread(() -> {
             try {
-                while (true) {
+                while (play) {
                     Thread.sleep(20);
                     out = client.getOutputStream();
                     PrintWriter print = new PrintWriter(out);
+//                    System.out.println(panel.getBullets().size());
                     Packets pack = new Packets("default", player, panel.getBullets());
                     print.write(pack.getMerge());
+//                    System.out.print(pack.getMerge());
                     print.flush();
                     Thread.yield();
                 }
@@ -103,63 +103,63 @@ public class Clientnew {
         }).start();
     }
 
-
     private void reviceDefauld() {
         new Thread(() -> {
             try {
-                while (true) {
+                while (play) {
                     in = client.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                     String s = null;
                     while ((s = reader.readLine()) != null) {
-                        System.out.println(s);
-                        String posall[] = s.split("~");
+//                        System.out.println(s);
+                        if (!s.equals("0")) {
+                            String posall[] = s.split("~");
 
-                        if(Integer.parseInt(posall[0]) > enemypos.size()){
-                            for(int i=1; i<posall.length;i++){
-                                String[] enemy = posall[i].split(";");
-                                int counter =0 ;
-                                for(int j=0;j<enemypos.size();j++){
-                                    if(enemypos.get(j).getId() != Integer.parseInt(enemy[1])){
-                                        counter ++;
+                            if (Integer.parseInt(posall[0]) > enemypos.size()) {
+                                for (int i = 1; i < posall.length; i++) {
+                                    String[] enemy = posall[i].split(";");
+                                    int counter = 0;
+                                    for (int j = 0; j < enemypos.size(); j++) {
+                                        if (enemypos.get(j).getId() != Integer.parseInt(enemy[1])) {
+                                            counter++;
+                                        }
+                                    }
+                                    if (counter != enemypos.size() - 1) {
+                                        Enenmy enenmy = new Enenmy(enemy[0], Integer.parseInt(enemy[1]), Packets.bullets(enemy[4], enemy[5]));
+                                        enemypos.add(enenmy);
                                     }
                                 }
-                                if(counter != enemypos.size()-1){
-                                    Enenmy enenmy = new Enenmy(enemy[0],Integer.parseInt(enemy[1]),Packets.bullets(enemy[4],enemy[5]));
-                                    enemypos.add(enenmy);
-                                }
                             }
-                        }
 
-                        for(int i=1;i<posall.length;i++){
-                            String[] enemy = posall[i].split(";");
-                            for(int j=0;j<enemypos.size();j++){
-                                if(enemypos.get(j).getId() == Integer.parseInt(enemy[1])){
-                                    String[] pos = enemy[3].split(",");
-                                    enemypos.get(j).setpos(Double.parseDouble(pos[0]),Double.parseDouble(pos[1]));
-                                    enemypos.get(j).setDirection(enemy[2]);
-                                    enemypos.get(j).setBullets(Packets.bullets(enemy[4],enemy[5]));
-                                }
-                            }
-                        }
-
-                        // Logout funktion neu mahcen funktioniert nicht
-                        if(Integer.parseInt(posall[0]) < enemypos.size()){
-                            for(int i=1; i<posall.length;i++){
+                            for (int i = 1; i < posall.length; i++) {
                                 String[] enemy = posall[i].split(";");
-                                int index;
-                                int counter =0 ;
-                                for(int j=0;j<enemypos.size();j++){
-                                    if(enemypos.get(j).getId() != Integer.parseInt(enemy[1])){
-                                        counter ++;
+                                for (int j = 0; j < enemypos.size(); j++) {
+                                    if (enemypos.get(j).getId() == Integer.parseInt(enemy[1])) {
+                                        String[] pos = enemy[3].split(",");
+                                        enemypos.get(j).setpos(Double.parseDouble(pos[0]), Double.parseDouble(pos[1]));
+                                        enemypos.get(j).setDirection(enemy[2]);
+//                                    System.out.println(enemy[2]);
+                                        enemypos.get(j).setBullets(Packets.bullets(enemy[4], enemy[5]));
                                     }
                                 }
-                                if(counter == 0){
-                                    index=i;
-                                }
                             }
-                        }
 
+//                         Logout funktion neu mahcen funktioniert nicht
+                            if (Integer.parseInt(posall[0]) < enemypos.size()) {
+                                ArrayList<Enenmy> enemynew = new ArrayList<Enenmy>();
+                                for (int i = 1; i < posall.length; i++) {
+                                    String[] enemy = posall[i].split(";");
+                                    for (int j = 0; j < enemypos.size(); j++) {
+                                        if (enemypos.get(j).getId() == Integer.parseInt(enemy[1])) {
+                                            enemynew.add(enemypos.get(j));
+                                        }
+                                    }
+                                }
+                                enemypos = enemynew;
+                            }
+                        } else {
+                            enemypos.removeAll(enemypos);
+                        }
                     }
                     Thread.yield();
                 }
@@ -167,30 +167,48 @@ public class Clientnew {
                 e.printStackTrace();
             }
         }).start();
-
-
     }
-// muss ich auch noch machen
-    private void Logout() {
 
+    // muss ich auch noch machen
+    private void logout() {
+        try {
+            play = false;
+            out = client.getOutputStream();
+            PrintWriter print = new PrintWriter(out);
+            Packets logout = new Packets("leave", id);
+            Thread.sleep(20);
+            print.write(logout.getMerge());
+            print.flush();
+            System.out.println("left");
 
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void dead(){
+        System.out.println("Dead");
+        logout();
     }
 
     private String processid(String s) {
         String jump = s;
         String out = "1";
 
-        if(s.length()>10){
-            jump=jump.substring(s.length()-(s.length()-7));
-        }
         char[] sy = jump.toCharArray();
-        for (int i = 0; i < sy.length; i+= 3) {
+        for (int i = 0; i < sy.length; i += 3) {
             out += (int) sy[i];
         }
 
+        if (out.length() > 5) {
+            out = "1" + out.substring(out.length() - 5);
+        }
+
+        if (out.length() < 5) {
+            for (int i = out.length(); i < 6; i++) {
+                out += i;
+            }
+        }
         return out;
-
     }
-
-
 }

@@ -16,21 +16,21 @@ public class Game {
 
         System.out.println(input);
 
-        if(input.equals("client")) {
+        if (input.equals("client")) {
             startclient(h, w);
         }
-        if(input.equals("server")){
+        if (input.equals("server")) {
             startserver();
         }
 
     }
 
-    private void startclient(int h,int w) {
-        Client client = new Client(h,w);
+    private void startclient(int h, int w) {
+        Client client = new Client(h, w);
         client.start();
     }
 
-    private void startserver(){
+    private void startserver() {
 
         Server server = new Server();
         server.start();

@@ -11,11 +11,17 @@ public class Packets {
     private String msg;
     private String typ;
     private String[] processed;
-    private String merg ="";
+    private String merg = "";
 
     public Packets(String msg_) {
         msg = msg_;
         process();
+    }
+
+    public Packets(String typ, int id){
+        if(typ.equals("leave")){
+            leave(id);
+        }
     }
 
     public Packets(String typ_, String name, String id) {
@@ -28,31 +34,31 @@ public class Packets {
 
     public Packets(String typ_, Player p, ArrayList<Bullet> bullets) {
         typ = typ_;
-        merger(p,bullets);
+        merger(p, bullets);
     }
 
     private void process() {
         processed = msg.split(";");
     }
 
-    private void merger(Player p, ArrayList<Bullet> b){
-        merg += p.toStrings()+";";
-        merg += b.size()+";";
+    private void merger(Player p, ArrayList<Bullet> b) {
+        merg += p.toStrings() + ";";
+        merg += b.size() + ";";
 
-        for(int i=0;i<b.size();i++) {
+        for (int i = 0; i < b.size(); i++) {
             if (i < b.size() - 1) {
                 merg += b.get(i).toString() + ",";
             } else {
                 merg += b.get(i).toString();
             }
         }
-        if(b.size() == 0){
+        if (b.size() == 0) {
             merg += p.toString();
         }
     }
 
     private void merge(String[] s) {
-        merg += s[0]+";";
+        merg += s[0] + ";";
         merg += s[1];
 
     }
@@ -62,20 +68,26 @@ public class Packets {
     }
 
     public String getMerge() {
-        return merg+"\n";
+        return merg + "\n";
     }
 
-    public static ArrayList<Bullet> bullets(String number,String bullets){
+    public static ArrayList<Bullet> bullets(String number, String bullets) {
         ArrayList<Bullet> b = new ArrayList<Bullet>();
         String[] in = bullets.split(",");
-        if(Integer.parseInt(number) == in.length){
+        if (Integer.parseInt(number) != in.length/2) {
             System.out.println("fehler bullet number zu groß --->" + Integer.parseInt(number));
         }
-        for(int i = 0;i<in.length;i+= 2){
-            b.add(new Bullet(new Pos(Double.parseDouble(in[i]),Double.parseDouble(in[i+1]))));
-
+        for (int i = 0; i < in.length; i += 2) {
+            b.add(new Bullet(new Pos(Double.parseDouble(in[i]), Double.parseDouble(in[i + 1]))));
         }
 
         return b;
     }
+
+    public void leave(int id){
+        merg = "leave;"+id;
+    }
+
+
+
 }

@@ -2,6 +2,7 @@ package entities;
 
 import world.Pos;
 import world.Colide;
+import world.Vektor;
 
 import java.awt.*;
 
@@ -10,8 +11,8 @@ public class Bullet extends Colide {
     private double lenghttarget;
     private double xdiv;
     private double ydiv;
-    private static double h = 10.0;
-    private static double w = 10.0;
+    private static double h = 5.0;
+    private static double w = 5.0;
     private int count;
     private double defauldspeed = 2;
     private Player player;
@@ -50,8 +51,9 @@ public class Bullet extends Colide {
             move();
         }
         Graphics2D g2 = (Graphics2D) g;
-        g2.setColor(Color.GREEN);
-        g2.drawRect((int) super.getX(), (int) super.getY(), 10, 10);
+        g2.setColor(Color.BLACK);
+//        g2.drawRect((int) super.getX(), (int) super.getY(), 10, 10);
+        g2.fillRect((int) super.getX(), (int) super.getY(), 10, 10);
     }
 
     public boolean check(Player p) {
@@ -61,7 +63,9 @@ public class Bullet extends Colide {
         return false;
     }
 
-    ;
+    public boolean checks(Vektor s){
+        return  super.check(s);
+    }
 
     public boolean hasfinished() {
         if (count >= 100) {

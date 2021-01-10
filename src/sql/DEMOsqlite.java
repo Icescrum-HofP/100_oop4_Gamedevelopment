@@ -22,7 +22,7 @@ public class DEMOsqlite {
    Statement stmt = null;
    try {
 
-      c = (SQLiteConnection)DriverManager.getConnection("jdbc:sqlite:fragen-spiel-bauer.db");
+      c = (SQLiteConnection)DriverManager.getConnection("jdbc:sqlite:db/fragen-spiel-bauer.db");
       c.setAutoCommit(false);
       System.out.println("fragen-spiel-bauer.db: opened  successfully");
 

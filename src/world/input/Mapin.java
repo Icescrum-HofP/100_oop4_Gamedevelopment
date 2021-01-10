@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-
 public class Mapin {
 
     private String xmlpath;
@@ -39,7 +38,7 @@ public class Mapin {
         settings = new Settings();
         String[] s = settings.getSpritesheedparameters();
         objects = new ArrayList<HitBox>();
-        System.out.println(settings.getSpritesheedpath());
+//        System.out.println(settings.getSpritesheedpath());
         spritesheed = new Tiles(settings.getSpritesheedpath(), Integer.parseInt(s[0]), Integer.parseInt(s[1]), Integer.parseInt(s[2]), Integer.parseInt(s[3]));
         xmlinput();
         tielmap();
@@ -96,7 +95,7 @@ public class Mapin {
     // map in tieles umwandeln
     private void tielmap() {
 
-       // System.out.println(spritesheed.getX());
+        // System.out.println(spritesheed.getX());
 
         for (int i = 0; i < layers; i++) {
             for (int j = 0; j < height; j++) {
@@ -130,19 +129,19 @@ public class Mapin {
     private void collisionlayer() {
 
         //Element objectgroup = (Element) doc.getElementsByTagName("objectgroup");
-       // System.out.println("zeile 133 "+objList.getLength());
+        // System.out.println("zeile 133 "+objList.getLength());
         for (int i = 0; i < objList.getLength(); i++) {
-            NodeList objects = ((Element)objList.item(i)).getElementsByTagName("object");
-           // System.out.println("zeile 136 "+objects.getLength());
+            NodeList objects = ((Element) objList.item(i)).getElementsByTagName("object");
+            // System.out.println("zeile 136 "+objects.getLength());
 
-            for(int j = 0; j< objects.getLength();j++){
-            Element object = (Element)objects.item(j);
-            HitBox test = new HitBox(Double.parseDouble(object.getAttribute("x")),Double.parseDouble(object.getAttribute("y")),Double.parseDouble(object.getAttribute("height")),Double.parseDouble(object.getAttribute("width")));
-                this.objects.add(new HitBox(Double.parseDouble(object.getAttribute("x")),Double.parseDouble(object.getAttribute("y")),Double.parseDouble(object.getAttribute("height")),Double.parseDouble(object.getAttribute("width"))));
-         //       System.out.println("zeile 142 "+ test.toString());
+            for (int j = 0; j < objects.getLength(); j++) {
+                Element object = (Element) objects.item(j);
+                HitBox test = new HitBox(Double.parseDouble(object.getAttribute("x")), Double.parseDouble(object.getAttribute("y")), Double.parseDouble(object.getAttribute("height")), Double.parseDouble(object.getAttribute("width")));
+                this.objects.add(new HitBox(Double.parseDouble(object.getAttribute("x")), Double.parseDouble(object.getAttribute("y")), Double.parseDouble(object.getAttribute("height")), Double.parseDouble(object.getAttribute("width"))));
+                //       System.out.println("zeile 142 "+ test.toString());
             }
         }
-       // System.out.println("zeile 145 "+objects.size());
+        // System.out.println("zeile 145 "+objects.size());
     }
 
 

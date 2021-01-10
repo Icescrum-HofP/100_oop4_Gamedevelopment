@@ -13,6 +13,7 @@ public class User {
     private int id;
     private ArrayList<Pos> pos;
     private ArrayList<ArrayList<Bullet>> bullets;
+    private ArrayList<Bullet> bullet;
     private Socket socket;
     private boolean go = false;
     private String direction;
@@ -20,9 +21,9 @@ public class User {
     public User() {
         pos = new ArrayList<>();
         bullets = new ArrayList<>();
-//        ArrayList<Bullet> b = new ArrayList<Bullet>();
-//        b.add(new Bullet(new Pos(0.0,0.0)));
-//        bullets.add(b);
+        ArrayList<Bullet> b = new ArrayList<Bullet>();
+        b.add(new Bullet(new Pos(0.0,0.0)));
+        bullets.add(b);
         direction = "down";
     }
 
@@ -41,7 +42,7 @@ public class User {
         for (int i = 0; i < s.length; i += 2) {
             bulletArrayList.add(new Bullet(new Pos(Double.parseDouble(s[i]), Double.parseDouble(s[1 + i]))));
         }
-        if (bullets.size() > 5) {
+        if (bullets.size() > 10) {
             bullets.remove(0);
         }
         bullets.add(bulletArrayList);
@@ -54,9 +55,9 @@ public class User {
     public String next() {
         String msg = name + ";" + id + ";";
 
-        if(direction != ""){
-            msg+= direction+";";
-        }else {
+        if (direction != "") {
+            msg += direction + ";";
+        } else {
             msg += "down;";
         }
 
@@ -69,25 +70,33 @@ public class User {
         }
 
 
-
-
         if (bullets.size() > 0) {
-            msg += ";"+bullets.get(0).size()+1+";";
-            msg += lastpos.toString()+",";
+            int m = bullets.get(0).size() + 1;
+            msg += ";" + m + ";";
+            msg += lastpos.toString() + ",";
+//            System.out.println("b size: "+bullets.get(0).size());
             for (int i = 0; i < bullets.get(0).size(); i++) {
-
                 if (i < bullets.get(0).size() - 1) {
                     msg += bullets.get(0).get(i).toString() + ",";
                 } else {
                     msg += bullets.get(0).get(i).toString();
                 }
             }
-            bullets.remove(0);
-        }else {
-            msg += ";1;"+lastpos.toString();
+            bullet = bullets.get(0);
+           bullets.remove(0);
+        } else {
+            int m = bullet.size();
+            msg += ";"+m+";";
+            for (int i = 0; i < bullet.size(); i++) {
+                if (i < bullet.size() - 1) {
+                    msg += bullet.get(i).toString() + ",";
+                } else {
+                    msg += bullet.get(i).toString();
+                }
+            }
         }
 
-
+//        System.out.println(msg);
         return msg;
     }
 
@@ -118,5 +127,9 @@ public class User {
 
     public Socket getSocket() {
         return socket;
+    }
+
+    public String getName() {
+        return name;
     }
 }

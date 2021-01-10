@@ -12,9 +12,7 @@ public class Clienttest {
         System.out.println(" client name");
         Scanner in = new Scanner(System.in);
         String input = in.next();
-
-
-        Clientnew spiel= new Clientnew(500,800,true,input);
+        Clientnew spiel = new Clientnew(1000, 1540, true, input);
     }
 
 }

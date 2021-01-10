@@ -10,25 +10,25 @@ public class Fileinput {
 
     private BufferedReader read;
     private String filepath;
-    private ArrayList<String>  list;
+    private ArrayList<String> list;
 
-    public Fileinput(String path){
+    public Fileinput(String path) {
         filepath = path;
         list = new ArrayList<String>();
         fileread();
     }
 
     // File reader
-    private void fileread(){
+    private void fileread() {
         String in = "";
 
         try {
-            read = new BufferedReader (new FileReader( new File(filepath)));
+            read = new BufferedReader(new FileReader(new File(filepath)));
             String s;
-        while ((s = read.readLine())!=null)  {
-           list.add(s);
-        }
-        }catch (IOException e){
+            while ((s = read.readLine()) != null) {
+                list.add(s);
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

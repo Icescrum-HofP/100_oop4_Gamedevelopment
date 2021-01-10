@@ -14,6 +14,6 @@ public class HitBox extends Colide {
 
     @Override
     public String toString() {
-        return getW()+"|"+getH()+"|"+getX()+"|"+getY();
+        return getW() + "|" + getH() + "|" + getX() + "|" + getY();
     }
 }
