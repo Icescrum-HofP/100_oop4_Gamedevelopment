@@ -9,14 +9,14 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class Servernew {
+public class Server {
 
     //number of player~name;id;Direction;pos;bulletsize;bullets~name;id;Direction;pos;bulletsize;bullets
 
     private ArrayList<User> users;
     private ServerSocket server;
 
-    public Servernew() {
+    public Server() {
         try {
             server = new ServerSocket(5555);
             users = new ArrayList<User>();

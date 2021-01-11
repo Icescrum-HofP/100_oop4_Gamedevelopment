@@ -10,7 +10,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class Clientnew {
+public class Client {
 
     //number of player~name;id;Direction;pos;bulletsize;bullets~name;id;Direction;pos;bulletsize;bullets
 
@@ -26,8 +26,9 @@ public class Clientnew {
     private String name;
     private boolean play = true;
     private boolean escape = false;
+    private boolean online = false;
 
-    public Clientnew(int h, int w, boolean online, String name_) {
+    public Client(int h, int w, boolean online, String name_) {
         settings = new Settings();
         name = name_;
         player = new Player(name, settings);
@@ -36,7 +37,7 @@ public class Clientnew {
         panel.addPlayer(player);
         enemypos = new ArrayList<Enenmy>();
         speed = settings.getPlayerspeed();
-
+        this.online = online;
         if (online) {
             login();
         }
@@ -47,7 +48,7 @@ public class Clientnew {
         try {
             while (play) {
                 escape = panel.isEscape();
-                if(panel.isDeath()){
+                if (panel.isDeath()) {
                     dead();
                 }
                 if (!escape) {
@@ -55,10 +56,10 @@ public class Clientnew {
                     panel.playerupdate(speed);
                     panel.enemyupdate(enemypos);
                     panel.checkcollide();
-                    panel.repaint();
                 } else {
                     logout();
                 }
+                panel.repaint();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -172,23 +173,26 @@ public class Clientnew {
     // muss ich auch noch machen
     private void logout() {
         try {
-            play = false;
-            out = client.getOutputStream();
-            PrintWriter print = new PrintWriter(out);
-            Packets logout = new Packets("leave", id);
-            Thread.sleep(20);
-            print.write(logout.getMerge());
-            print.flush();
-            System.out.println("left");
-
+            if(online) {
+                play = false;
+                out = client.getOutputStream();
+                PrintWriter print = new PrintWriter(out);
+                Packets logout = new Packets("leave", id);
+                Thread.sleep(20);
+                print.write(logout.getMerge());
+                print.flush();
+//                System.out.println("left");
+            }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    private void dead(){
+    private void dead() {
         System.out.println("Dead");
-        logout();
+        panel.setDead(true);
+        panel.repaint();
+            logout();
     }
 
     private String processid(String s) {

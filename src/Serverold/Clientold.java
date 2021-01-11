@@ -10,7 +10,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class Client {
+public class Clientold {
 
     private GamePanel panel;
     private Player player;
@@ -23,7 +23,7 @@ public class Client {
     private InputStream in;
     private OutputStream out;
 
-    public Client(int h, int w) {
+    public Clientold(int h, int w) {
         try {
             settings = new Settings();
             player =new Player("Icescrum",settings);

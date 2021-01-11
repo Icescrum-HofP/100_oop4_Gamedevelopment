@@ -6,13 +6,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class Server {
+public class Serverold {
 
     private ServerSocket server;
     private ArrayList<Socket> clients;
     private ArrayList<ArrayList<String>> listofpos;
 
-    public Server() {
+    public Serverold() {
 
         try {
             clients = new ArrayList<Socket>();

@@ -1,7 +1,7 @@
 package game;
 
-import Serverold.Client;
-import Serverold.Server;
+import Serverold.Clientold;
+import Serverold.Serverold;
 
 import java.util.Scanner;
 
@@ -26,13 +26,13 @@ public class Game {
     }
 
     private void startclient(int h, int w) {
-        Client client = new Client(h, w);
+        Clientold client = new Clientold(h, w);
         client.start();
     }
 
     private void startserver() {
 
-        Server server = new Server();
+        Serverold server = new Serverold();
         server.start();
 
     }

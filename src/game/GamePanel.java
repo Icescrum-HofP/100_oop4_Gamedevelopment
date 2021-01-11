@@ -31,6 +31,7 @@ public class GamePanel extends JPanel {
     //------Map-----------
     private Mapin map;
     private Maplist maplist;
+    private boolean dead;
 
     public GamePanel(int h, int w) {
         maplist = new Maplist();
@@ -51,6 +52,7 @@ public class GamePanel extends JPanel {
         frame.setLocationRelativeTo(null);
         Timer fpsHelper = new Timer(1000, fpsTimer);
         fpsHelper.restart();
+        dead = false;
     }
 
 
@@ -80,7 +82,9 @@ public class GamePanel extends JPanel {
     public void checkcollide() {
 
         //  System.out.println(objects.size());
+
         bulletcheck();
+
 //        for (Bullet s : bullets) {
 //            if (s.check(player)) {
 //                player.gethit();
@@ -155,6 +159,19 @@ public class GamePanel extends JPanel {
 
         g2.setColor(Color.red);
         g2.drawString("FPS: " + Long.toString(fps), 20, 10);
+
+        if(dead){
+            g2.setFont(g2.getFont().deriveFont(50f));
+         g2.setColor(Color.RED);
+         g2.drawString("YOU ARE DEAD\n GAME OVER",300,500);
+        }
+
+        if(escape){
+            g2.setFont(g2.getFont().deriveFont(50f));
+            g2.setColor(Color.RED);
+            g2.drawString("YOU HAVE EXITED\n GAME OVER",300,500);
+        }
+
     }
 
 
@@ -271,6 +288,10 @@ public class GamePanel extends JPanel {
 
     public boolean isDeath() {
         return player.isDeath();
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
     }
 
     //    public void bulletout() {

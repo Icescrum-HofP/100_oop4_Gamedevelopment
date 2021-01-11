@@ -1,10 +1,10 @@
 package test;
 
-import server.Servernew;
+import server.Server;
 
-public class Servertest {
+public class Serverrun {
     public static void main(String[] args) {
-        Servernew server = new Servernew();
+        Server server = new Server();
         server.start();
     }
 
