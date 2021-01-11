@@ -79,6 +79,7 @@ public class Client {
 //            System.out.println("message send");
             sendDefauld();
             reviceDefauld();
+            System.out.println("has Logd in");
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
