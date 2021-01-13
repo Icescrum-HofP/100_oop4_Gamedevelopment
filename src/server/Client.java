@@ -41,7 +41,6 @@ public class Client {
         speed = settings.getPlayerspeed();
         this.online = online_;
 
-
     }
 
     public void play() {
@@ -180,7 +179,7 @@ public class Client {
         }).start();
     }
 
-    // muss ich auch noch machen
+//  muss ich auch noch machen
     private void logout() {
         try {
             if(online) {
@@ -191,7 +190,7 @@ public class Client {
                 Thread.sleep(20);
                 print.write(logout.getMerge());
                 print.flush();
-//                System.out.println("left");
+                System.out.println("has Loogt out");
                 play = false;
             }
         } catch (IOException | InterruptedException e) {

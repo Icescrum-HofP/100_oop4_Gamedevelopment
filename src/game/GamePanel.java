@@ -299,6 +299,10 @@ public class GamePanel extends JPanel {
         frame.dispose();
     }
 
+    public JFrame getFrame(){
+        return frame;
+    }
+
     //    public void bulletout() {
 //        new Thread(() -> {
 //            while (true) {

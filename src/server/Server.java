@@ -20,7 +20,7 @@ public class Server {
         try {
             server = new ServerSocket(5555);
             users = new ArrayList<User>();
-            System.out.println("Server von HofP\n"+"--------------------------------------------");
+            System.out.println("Server von HofP\n" + "--------------------------------------------");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,7 +55,7 @@ public class Server {
                                 String[] array = s.split(";");
                                 if (array[0].equals("leave")) {
                                     ids.add(users.get(i).getId());
-//                                    System.out.println(users.get(i).getId()+ "-------> is going to leave"+ids.size());
+                                    System.out.println(users.get(i).getId() + "-------> is going to leave");
                                     break;
                                 }
                             }
@@ -73,7 +73,7 @@ public class Server {
                             }
                         }
                         if (index != 99) {
-                            System.out.println(users.get(index).getName() + " , " + users.get(index).getId() + " left");
+                            System.out.println(users.get(index).getName() + "," + users.get(index).getId() + " left");
                             users.remove(index);
                         }
                     }
@@ -91,7 +91,7 @@ public class Server {
                 System.out.println("emitter has started");
                 OutputStream out;
                 while (true) {
-                    ArrayList<User> copyusers = users;
+                    ArrayList<User> copyusers = new ArrayList<>(users);
                     if (copyusers.size() > 1) {
                         for (int i = 0; i < copyusers.size(); i++) {
                             out = copyusers.get(i).getSocket().getOutputStream();
@@ -138,26 +138,30 @@ public class Server {
                     Socket clin;
                     if ((clin = server.accept()) != null) {
 
+                        ArrayList<User> usercopy = new ArrayList<>(users);
+                        boolean copy = false;
                         User us = new User();
                         us.setSocket(clin);
                         String s;
                         InputStream in = us.getSocket().getInputStream();
                         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                        do {
-
-                            while ((s = reader.readLine()) != null) {
-                                if (s != null) {
-                                    Packets inputpack = new Packets(s);
-                                    String[] j = inputpack.getProcessed();
-                                    us.setName(j[0]);
-                                    us.setId(Integer.parseInt(j[1]));
-                                    System.out.println(j[0] + " --->" + j[1] + " has joind");
-                                    us.go();
-                                    users.add(us);
-                                    break;
+                        while ((s = reader.readLine()) != null) {
+                            Packets inputpack = new Packets(s);
+                            String[] j = inputpack.getProcessed();
+                            us.setName(j[0]);
+                            us.setId(Integer.parseInt(j[1]));
+                            System.out.println(j[0] + " --->" + j[1] + " has joind");
+                            us.go();
+                            for (User u : usercopy) {
+                                if (u.getId() == us.getId()) {
+                                    copy = true;
                                 }
                             }
-                        } while (us.isGo() == false);
+                            if (!copy) {
+                                users.add(us);
+                            }
+                            break;
+                        }
                     }
                     Thread.yield();
                 }
