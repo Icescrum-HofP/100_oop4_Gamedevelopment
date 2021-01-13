@@ -5,7 +5,7 @@ import server.Client;
 import sql.Sqlsrcipt;
 
 public class Clientosql {
-
+// this is the client without the MYSQL database
 
     public static void main(String[] args) {
         String name = "";

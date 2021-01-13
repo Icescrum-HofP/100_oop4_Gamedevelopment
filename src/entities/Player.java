@@ -54,13 +54,13 @@ public class Player extends Colide {
     }
 
     public void paintComponent(Graphics g) {
-            Graphics2D g2 = (Graphics2D) g;
-            //g2.drawRect((int) super.getX(), (int) super.getY(), (int)h_, (int)w_);
-            g2.setColor(Color.green);
-            g2.drawString(name+" "+ helth+"/100", (int) super.getX(), (int) super.getY() - 10);
-            drawTank(g2);
+        Graphics2D g2 = (Graphics2D) g;
+        //g2.drawRect((int) super.getX(), (int) super.getY(), (int)h_, (int)w_);
+        g2.setColor(Color.green);
+        g2.drawString(name + " " + helth + "/100", (int) super.getX(), (int) super.getY() - 10);
+        drawTank(g2);
 //            System.out.println(direction);
-            //g2.drawImage(avatar.getTieles(0,0),(int) super.getX(), (int) super.getY(),null );
+        //g2.drawImage(avatar.getTieles(0,0),(int) super.getX(), (int) super.getY(),null );
     }
 
     public void drawTank(Graphics2D graphics) {
@@ -90,7 +90,7 @@ public class Player extends Colide {
 
     private void getangle() {
 
-        if(player) {
+        if (player) {
             direction = getMovedirection();
         }
         switch (direction) {
@@ -133,7 +133,9 @@ public class Player extends Colide {
         this.positionbevor = positionbevor;
     }
 
-    public void setDirection(String in){direction = in;}
+    public void setDirection(String in) {
+        direction = in;
+    }
 
     public void gethit() {
         helth = helth - damage;
@@ -156,11 +158,11 @@ public class Player extends Colide {
             directionbevor = direction;
         }
 
-        return name + ";" + getId() + ";" + direction_ + ";" +(int) getX() + "," + (int)getY();
+        return name + ";" + getId() + ";" + direction_ + ";" + (int) getX() + "," + (int) getY();
     }
 
-    public boolean isDeath(){
-        if(helth < 0){
+    public boolean isDeath() {
+        if (helth < 0) {
             life = false;
             return true;
         }

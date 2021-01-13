@@ -63,8 +63,8 @@ public class Bullet extends Colide {
         return false;
     }
 
-    public boolean checks(Vektor s){
-        return  super.check(s);
+    public boolean checks(Vektor s) {
+        return super.check(s);
     }
 
     public boolean hasfinished() {

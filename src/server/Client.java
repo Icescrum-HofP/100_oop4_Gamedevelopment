@@ -29,7 +29,7 @@ public class Client {
     private boolean escape = false;
     private boolean online = false;
 
-    public Client(int h, int w, boolean online_, String name_,String ip_) {
+    public Client(int h, int w, boolean online_, String name_, String ip_) {
         settings = new Settings();
         name = name_;
         ip = ip_;
@@ -48,7 +48,7 @@ public class Client {
             if (online) {
                 login();
             }
-            while (play&&!escape) {
+            while (play && !escape) {
                 escape = panel.isEscape();
                 if (panel.isDeath()) {
                     dead();
@@ -179,10 +179,10 @@ public class Client {
         }).start();
     }
 
-//  muss ich auch noch machen
+    //  muss ich auch noch machen
     private void logout() {
         try {
-            if(online) {
+            if (online) {
                 play = false;
                 out = client.getOutputStream();
                 PrintWriter print = new PrintWriter(out);
@@ -202,7 +202,7 @@ public class Client {
         System.out.println("Dead");
         panel.setDead(true);
         panel.repaint();
-            logout();
+        logout();
     }
 
     private String processid(String s) {
@@ -225,8 +225,6 @@ public class Client {
         }
         return out;
     }
-
-
 
 
 }

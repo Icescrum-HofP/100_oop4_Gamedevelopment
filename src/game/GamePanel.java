@@ -161,16 +161,16 @@ public class GamePanel extends JPanel {
         g2.setColor(Color.red);
         g2.drawString("FPS: " + Long.toString(fps), 20, 10);
 
-        if(dead){
-            g2.setFont(g2.getFont().deriveFont(50f));
-         g2.setColor(Color.RED);
-         g2.drawString("YOU ARE DEAD\n GAME OVER",300,500);
-        }
-
-        if(escape){
+        if (dead) {
             g2.setFont(g2.getFont().deriveFont(50f));
             g2.setColor(Color.RED);
-            g2.drawString("YOU HAVE EXITED\n GAME OVER",300,500);
+            g2.drawString("YOU ARE DEAD\n GAME OVER", 300, 500);
+        }
+
+        if (escape) {
+            g2.setFont(g2.getFont().deriveFont(50f));
+            g2.setColor(Color.RED);
+            g2.drawString("YOU HAVE EXITED\n GAME OVER", 300, 500);
         }
 
     }
@@ -295,11 +295,11 @@ public class GamePanel extends JPanel {
         this.dead = dead;
     }
 
-    public void close(){
+    public void close() {
         frame.dispose();
     }
 
-    public JFrame getFrame(){
+    public JFrame getFrame() {
         return frame;
     }
 

@@ -22,7 +22,7 @@ public class User {
         pos = new ArrayList<>();
         bullets = new ArrayList<>();
         ArrayList<Bullet> b = new ArrayList<Bullet>();
-        b.add(new Bullet(new Pos(0.0,0.0)));
+        b.add(new Bullet(new Pos(0.0, 0.0)));
         bullets.add(b);
         direction = "down";
     }
@@ -83,10 +83,10 @@ public class User {
                 }
             }
             bullet = bullets.get(0);
-           bullets.remove(0);
+            bullets.remove(0);
         } else {
             int m = bullet.size();
-            msg += ";"+m+";";
+            msg += ";" + m + ";";
             for (int i = 0; i < bullet.size(); i++) {
                 if (i < bullet.size() - 1) {
                     msg += bullet.get(i).toString() + ",";

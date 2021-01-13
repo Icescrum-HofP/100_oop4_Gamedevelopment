@@ -18,8 +18,8 @@ public class Packets {
         process();
     }
 
-    public Packets(String typ, int id){
-        if(typ.equals("leave")){
+    public Packets(String typ, int id) {
+        if (typ.equals("leave")) {
             leave(id);
         }
     }
@@ -74,7 +74,7 @@ public class Packets {
     public static ArrayList<Bullet> bullets(String number, String bullets) {
         ArrayList<Bullet> b = new ArrayList<Bullet>();
         String[] in = bullets.split(",");
-        if (Integer.parseInt(number) != in.length/2) {
+        if (Integer.parseInt(number) != in.length / 2) {
             System.out.println("fehler bullet number zu groß --->" + Integer.parseInt(number));
         }
         for (int i = 0; i < in.length; i += 2) {
@@ -84,10 +84,9 @@ public class Packets {
         return b;
     }
 
-    public void leave(int id){
-        merg = "leave;"+id;
+    public void leave(int id) {
+        merg = "leave;" + id;
     }
-
 
 
 }

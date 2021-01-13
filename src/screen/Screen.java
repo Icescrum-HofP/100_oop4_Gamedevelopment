@@ -132,15 +132,15 @@ public class Screen extends JFrame {
 
     }
 
-    public  void setOnline(boolean online_){
+    public void setOnline(boolean online_) {
 
-        if(online_){
+        if (online_) {
             rdbtnNewRadioButton_1.setSelected(true);
             rdbtnNewRadioButton.setSelected(false);
             lblNewLabel1.setVisible(true);
             textField1.setVisible(true);
             online = true;
-        }else {
+        } else {
             rdbtnNewRadioButton.setSelected(true);
             online = false;
             rdbtnNewRadioButton_1.setSelected(false);

@@ -8,7 +8,7 @@ import javax.sound.midi.Soundbank;
 import java.util.Scanner;
 
 public class Clientrun {
-
+// this is the client with the MYSQL database
 
     public static void main(String[] args) {
         String name = "";

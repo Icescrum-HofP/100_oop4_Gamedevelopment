@@ -24,7 +24,7 @@ public class Tiles {
         xoffset = xoffset_;
         yoffset = yoffset_;
         try {
-            URL path =getClass().getClassLoader().getResource(path_);
+            URL path = getClass().getClassLoader().getResource(path_);
 
             BufferedImage image = ImageIO.read(path);
 

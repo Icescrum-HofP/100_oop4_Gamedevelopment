@@ -9,7 +9,6 @@ public abstract class Vektor {
     private String movedirection;
 
     // Constuctors
-
     public Vektor(double x_, double y_) {
         x = x_;
         y = y_;
@@ -27,7 +26,7 @@ public abstract class Vektor {
     // Other
     @Override
     public String toString() {
-        return (int)x + "," +(int) y;
+        return (int) x + "," + (int) y;
     }
 
 

@@ -13,10 +13,12 @@ public class Enenmy extends Player {
     private String direction;
     private String name;
 
+    //old builder
     public Enenmy() {
         super("olav", settings, nameid);
     }
 
+    //
     public Enenmy(String name_, int id, ArrayList<Bullet> bullets_) {
         super(name_, settings, id);
         name = name_;
@@ -32,7 +34,7 @@ public class Enenmy extends Player {
         super.setDirection(this.direction);
     }
 
-    public ArrayList<Bullet> getBullets(){
+    public ArrayList<Bullet> getBullets() {
         return bullets;
     }
 

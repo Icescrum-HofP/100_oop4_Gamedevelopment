@@ -26,10 +26,11 @@ public class Clientold {
     public Clientold(int h, int w) {
         try {
             settings = new Settings();
-            player =new Player("Icescrum",settings);
-            client = new Socket(settings.getIp(), settings.getPort());;
+            player = new Player("Icescrum", settings);
+            client = new Socket(settings.getIp(), settings.getPort());
+            ;
             panel = new GamePanel(h, w);
-            player.setpos(100.0,100.0);
+            player.setpos(100.0, 100.0);
             panel.addPlayer(player);
             enemypos = new ArrayList<Enenmy>();
             packages = 1;
@@ -41,14 +42,17 @@ public class Clientold {
         System.out.println("client startet");
     }
 
-    public void start(){
+    public void start() {
         recive();
         serverupdate();
-        try{
-        while (true) {
-            Thread.sleep(10);
-            update();
-        }}catch (InterruptedException e){e.printStackTrace();}
+        try {
+            while (true) {
+                Thread.sleep(10);
+                update();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void serverupdate() {
@@ -70,7 +74,8 @@ public class Clientold {
             Thread.yield();
         }).start();
     }
-//number of enemies;name,pos,bullets;pos,bullest;
+
+    //number of enemies;name,pos,bullets;pos,bullest;
     public void recive() {
         new Thread(() -> {
             try {
@@ -80,7 +85,7 @@ public class Clientold {
                     String s = null;
                     while ((s = reader.readLine()) != null) {
                         String posall[] = s.split(",");
-                       // System.out.println(s);
+                        // System.out.println(s);
                         if (posall.length >= 3) {
                             if (Integer.parseInt(posall[0]) != enemypos.size() && enemypos.size() < Integer.parseInt(posall[0])) {
                                 for (int i = enemypos.size(); i < Integer.parseInt(posall[0]); i++) {
@@ -89,7 +94,7 @@ public class Clientold {
                                 }
                             }
                             for (int i = 0; i < enemypos.size(); i++) {
-                             //   System.out.println(posall[(1 * (i + 1))]);
+                                //   System.out.println(posall[(1 * (i + 1))]);
                                 // System.out.println(posall[2 * (i + 1)]);
                                 enemypos.get(i).setpos(Double.parseDouble(posall[(1 * (i + 1))]), Double.parseDouble(posall[2 * (i + 1)]));
                             }

@@ -23,15 +23,15 @@ public class Sqlsrcipt {
             c.setAutoCommit(false);
 
             stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery( "SELECT * FROM FRAGEN;" );
+            ResultSet rs = stmt.executeQuery("SELECT * FROM FRAGEN;");
 
-            while ( rs.next() ) {
+            while (rs.next()) {
                 int id = rs.getInt("id");
-                String  fragentext = rs.getString("fragentext");
-                String  loesungstext = rs.getString("loesungstext");
-                int punkte  = rs.getInt("punkte");
+                String fragentext = rs.getString("fragentext");
+                String loesungstext = rs.getString("loesungstext");
+                int punkte = rs.getInt("punkte");
 
-                Questions q = new Questions(id,fragentext,loesungstext,punkte);
+                Questions q = new Questions(id, fragentext, loesungstext, punkte);
                 questions.add(q);
 
 //                System.out.println( "ID = " + id );
@@ -45,27 +45,27 @@ public class Sqlsrcipt {
             stmt.close();
             c.close();
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
 
-    private Questions getRandomq(){
+    private Questions getRandomq() {
         Random in = new Random();
-        int number = in.nextInt(questions.size())-1;
+        int number = in.nextInt(questions.size()) - 1;
 //        System.out.println(number);
         qr = questions.get(number);
         return qr;
     }
 
-    public boolean nextqestion(){
+    public boolean nextqestion() {
         boolean status = false;
         getRandomq();
 
-        String in= JOptionPane.showInputDialog(null,"F: "+qr.getFrage()+" A: "+qr.getAntwort(),null);
-        if(in.equals(qr.getAntwort())){
-        status = true;
+        String in = JOptionPane.showInputDialog(null, "F: " + qr.getFrage() + " A: " + qr.getAntwort(), null);
+        if (in.equals(qr.getAntwort())) {
+            status = true;
         }
 
         return status;

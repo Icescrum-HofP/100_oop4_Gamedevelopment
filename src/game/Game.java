@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 
 public class Game {
+// old version
 
     public Game(int h, int w) {
 
