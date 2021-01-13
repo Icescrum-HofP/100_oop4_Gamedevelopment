@@ -14,18 +14,18 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 
 
 public class Mapin {
 
-    private String xmlpath;
+    private URL xmlpath;
     private int width;
     private int height;
     private int layers;
     private int[][][] contents;
     private Tile[][][] imgs;
-    private File xmlFlie;
     private Tiles spritesheed;
     private Settings settings;
     private NodeList objList;
@@ -33,8 +33,7 @@ public class Mapin {
     private Document doc;
 
     public Mapin(String path) {
-        xmlpath = path;
-        xmlFlie = new File(xmlpath);
+        xmlpath = getClass().getClassLoader().getResource(path);
         settings = new Settings();
         String[] s = settings.getSpritesheedparameters();
         objects = new ArrayList<HitBox>();
@@ -55,7 +54,7 @@ public class Mapin {
 
             DocumentBuilderFactory docBF = DocumentBuilderFactory.newInstance();
             DocumentBuilder docB = docBF.newDocumentBuilder();
-            doc = docB.parse(xmlFlie);
+            doc = docB.parse(String.valueOf(xmlpath));
 
             NodeList layerList = doc.getElementsByTagName("layer");
             NodeList dataList = doc.getElementsByTagName("data");

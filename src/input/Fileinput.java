@@ -1,19 +1,17 @@
 package input;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class Fileinput {
 
     private BufferedReader read;
-    private String filepath;
+    private URL filepath;
     private ArrayList<String> list;
 
     public Fileinput(String path) {
-        filepath = path;
+        filepath = getClass().getClassLoader().getResource(path);;
         list = new ArrayList<String>();
         fileread();
     }
@@ -23,7 +21,7 @@ public class Fileinput {
         String in = "";
 
         try {
-            read = new BufferedReader(new FileReader(new File(filepath)));
+            read = new BufferedReader(new InputStreamReader(filepath.openStream()));
             String s;
             while ((s = read.readLine()) != null) {
                 list.add(s);
@@ -34,10 +32,6 @@ public class Fileinput {
     }
 
     // Getter
-
-    public String getFilepath() {
-        return filepath;
-    }
 
     public ArrayList<String> getList() {
         return list;

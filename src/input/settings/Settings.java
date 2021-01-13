@@ -1,12 +1,12 @@
 package input.settings;
 
 import input.Fileinput;
-
+import java.net.URL;
 import java.util.ArrayList;
 
 public class Settings extends Fileinput {
 
-    private static String path = "src\\pics\\Settings";
+    private static String path = "pics/Settings";
     private String ip;
     private int port;
     private String avatarpath;
@@ -90,4 +90,11 @@ public class Settings extends Fileinput {
     public String[] getSpritesheedparameters() {
         return spritesheedparameters;
     }
+
+
+//    public static void main(String[] args) {
+//        Settings s = new Settings();
+//        System.out.println(s.ip);
+//    }
+
 }

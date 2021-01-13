@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 public class Tiles {
 
@@ -23,9 +24,9 @@ public class Tiles {
         xoffset = xoffset_;
         yoffset = yoffset_;
         try {
-            String path = path_;
+            URL path =getClass().getClassLoader().getResource(path_);
 
-            BufferedImage image = ImageIO.read(new File(path));
+            BufferedImage image = ImageIO.read(path);
 
             this.x = image.getHeight(null) / high;
             this.y = image.getWidth(null) / with;

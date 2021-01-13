@@ -52,9 +52,10 @@ public class Sqlsrcipt {
 
 
     private Questions getRandomq(){
-        Random in = new Random(questions.size());
-        int number = in.nextInt()-1;
-        qr = questions.get(0);
+        Random in = new Random();
+        int number = in.nextInt(questions.size())-1;
+//        System.out.println(number);
+        qr = questions.get(number);
         return qr;
     }
 

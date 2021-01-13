@@ -24,29 +24,32 @@ public class Client {
     private InputStream in;
     private OutputStream out;
     private String name;
+    private String ip;
     private boolean play = true;
     private boolean escape = false;
     private boolean online = false;
 
-    public Client(int h, int w, boolean online, String name_) {
+    public Client(int h, int w, boolean online_, String name_,String ip_) {
         settings = new Settings();
         name = name_;
+        ip = ip_;
         player = new Player(name, settings);
         panel = new GamePanel(h, w);
         player.setpos(100.0, 100.0);
         panel.addPlayer(player);
         enemypos = new ArrayList<Enenmy>();
         speed = settings.getPlayerspeed();
-        this.online = online;
-        if (online) {
-            login();
-        }
-        play();
+        this.online = online_;
+
+
     }
 
-    private void play() {
+    public void play() {
         try {
-            while (play) {
+            if (online) {
+                login();
+            }
+            while (play&&!escape) {
                 escape = panel.isEscape();
                 if (panel.isDeath()) {
                     dead();
@@ -60,7 +63,13 @@ public class Client {
                     logout();
                 }
                 panel.repaint();
+
             }
+            panel.repaint();
+            Thread.sleep(30);
+            panel.close();
+//            panel.setVisible(false);
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -68,7 +77,7 @@ public class Client {
 
     private void login() {
         try {
-            client = new Socket(settings.getIp(), settings.getPort());
+            client = new Socket(ip, settings.getPort());
             Packets pack = new Packets("welcome", name, processid(name));
             out = client.getOutputStream();
             PrintWriter print = new PrintWriter(out);
@@ -183,6 +192,7 @@ public class Client {
                 print.write(logout.getMerge());
                 print.flush();
 //                System.out.println("left");
+                play = false;
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -216,4 +226,8 @@ public class Client {
         }
         return out;
     }
+
+
+
+
 }

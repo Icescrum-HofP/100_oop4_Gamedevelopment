@@ -32,6 +32,7 @@ public class GamePanel extends JPanel {
     private Mapin map;
     private Maplist maplist;
     private boolean dead;
+    JFrame frame;
 
     public GamePanel(int h, int w) {
         maplist = new Maplist();
@@ -40,7 +41,7 @@ public class GamePanel extends JPanel {
         bullets = new ArrayList<Bullet>();
         objects = map.getObjects();
         this.setPreferredSize(new Dimension(w, h));
-        JFrame frame = new JFrame("First Game");
+        frame = new JFrame("First Game");
         frame.setLocation(100, 100);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(this);
@@ -292,6 +293,10 @@ public class GamePanel extends JPanel {
 
     public void setDead(boolean dead) {
         this.dead = dead;
+    }
+
+    public void close(){
+        frame.dispose();
     }
 
     //    public void bulletout() {

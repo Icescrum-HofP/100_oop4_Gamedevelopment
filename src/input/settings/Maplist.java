@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Maplist extends Fileinput {
 
-    private static String path = "src\\pics\\map";
+    private static String path = "pics/map";
     private String[] list;
 
     public Maplist() {

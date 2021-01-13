@@ -10,12 +10,16 @@ public class Screen extends JFrame {
 
     private JPanel contentPane;
     private JTextField textField;
+    private JTextField textField1;
     private String name;
     private boolean online = true;
     private volatile boolean start = false;
     private JRadioButton rdbtnNewRadioButton;
     private JRadioButton rdbtnNewRadioButton_1;
     private JButton btnNewButton;
+    private JButton btnNewButton1;
+    private JLabel lblNewLabel1;
+    private String ip;
 
     /**
      * Launch the application.
@@ -24,7 +28,7 @@ public class Screen extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
 //                try {
-                    Screen frame = new Screen();
+                Screen frame = new Screen(false);
 //                } catch (Exception e) {
 //                    e.printStackTrace();
 //                }
@@ -35,8 +39,9 @@ public class Screen extends JFrame {
     /**
      * Create the frame.
      */
-    public Screen() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public Screen(boolean first) {
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocation(100, 100);
 
         setBounds(100, 100, 320, 300);
         contentPane = new JPanel();
@@ -49,24 +54,52 @@ public class Screen extends JFrame {
         contentPane.add(textField);
         textField.setColumns(10);
 
-        btnNewButton = new JButton("Start");
+        textField1 = new JTextField();
+        textField1.setBounds(23, 68, 156, 20);
+        contentPane.add(textField1);
+        textField1.setColumns(10);
+        textField1.setText("62.75.216.145");
+
+        String reset = "Start";
+
+        if (!first) {
+            reset = "Restart";
+        }
+
+        btnNewButton = new JButton(reset);
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 name = textField.getText();
+                ip = textField1.getText();
                 if (!name.equals("")) {
-//                    System.out.println(name);
+                    if (ip.equals("")) {
+                        ip = "localhost";
+                    }
                     start = true;
-
 //                    System.out.println("Start");
                 }
             }
         });
-        btnNewButton.setBounds(181, 227, 116, 23);
+        btnNewButton.setBounds(200, 227, 90, 23);
         contentPane.add(btnNewButton);
+
+        btnNewButton1 = new JButton("Exit");
+        btnNewButton1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        btnNewButton1.setBounds(25, 227, 90, 23);
+        contentPane.add(btnNewButton1);
 
         JLabel lblNewLabel = new JLabel("Name:");
         lblNewLabel.setBounds(23, 11, 46, 14);
         contentPane.add(lblNewLabel);
+
+        lblNewLabel1 = new JLabel("IP:");
+        lblNewLabel1.setBounds(23, 51, 46, 14);
+        contentPane.add(lblNewLabel1);
+
 
         rdbtnNewRadioButton = new JRadioButton("Offline");
         rdbtnNewRadioButton.addActionListener(new ActionListener() {
@@ -74,9 +107,11 @@ public class Screen extends JFrame {
                 rdbtnNewRadioButton.setSelected(true);
                 online = false;
                 rdbtnNewRadioButton_1.setSelected(false);
+                lblNewLabel1.setVisible(false);
+                textField1.setVisible(false);
             }
         });
-        rdbtnNewRadioButton.setBounds(23, 85, 109, 23);
+        rdbtnNewRadioButton.setBounds(23, 105, 109, 23);
         contentPane.add(rdbtnNewRadioButton);
 
         rdbtnNewRadioButton_1 = new JRadioButton("Online");
@@ -84,15 +119,45 @@ public class Screen extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 rdbtnNewRadioButton_1.setSelected(true);
                 rdbtnNewRadioButton.setSelected(false);
+                lblNewLabel1.setVisible(true);
+                textField1.setVisible(true);
                 online = true;
             }
         });
-        rdbtnNewRadioButton_1.setBounds(23, 111, 109, 23);
+        rdbtnNewRadioButton_1.setBounds(23, 131, 109, 23);
         rdbtnNewRadioButton_1.setSelected(true);
         contentPane.add(rdbtnNewRadioButton_1);
 
         setVisible(true);
 
+    }
+
+    public  void setOnline(boolean online_){
+
+        if(online_){
+            rdbtnNewRadioButton_1.setSelected(true);
+            rdbtnNewRadioButton.setSelected(false);
+            lblNewLabel1.setVisible(true);
+            textField1.setVisible(true);
+            online = true;
+        }else {
+            rdbtnNewRadioButton.setSelected(true);
+            online = false;
+            rdbtnNewRadioButton_1.setSelected(false);
+            lblNewLabel1.setVisible(false);
+            textField1.setVisible(false);
+        }
+
+    }
+
+    public void setName(String name_) {
+        textField.setText(name_);
+    }
+
+    public void setIp(String ip_) {
+        if (ip_.equals("")) {
+            textField.setText(ip_);
+        }
     }
 
     public boolean isStart() {
@@ -106,5 +171,9 @@ public class Screen extends JFrame {
 
     public boolean isOnline() {
         return online;
+    }
+
+    public String getIp() {
+        return ip;
     }
 }

@@ -1,7 +1,7 @@
 ip:62.75.216.145
 port:5555
-avatar:src\\pics\\Tankblue.png
+avatar:pics/Tankblue.png
 avatarparameters:65,60,13,0
 playerspeed:2.3
-spritesheed:src\\pics\\mc.png
+spritesheed:pics/mc.png
 spritesheedparameters:64,64,0,0
