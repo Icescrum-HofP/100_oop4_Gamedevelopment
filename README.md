@@ -1,4 +1,4 @@
 # 100_oop4_Gamedevelopmend
-This is a Game is only a school projekt\
+This is a school Projekt
 
 Made by Icescrum
